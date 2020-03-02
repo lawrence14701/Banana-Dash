@@ -1,0 +1,23 @@
+{
+  "name": "monkey_js_game",
+  "version": "1.0.0",
+  "description": "Background",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawrence14701/Monkey_game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lawrence14701/Monkey_game/issues"
+  },
+  "homepage": "https://github.com/lawrence14701/Monkey_game#readme",
+  "dependencies": {
+    "serve": "^11.3.0"
+  }
+}
