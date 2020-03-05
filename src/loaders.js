@@ -8,4 +8,7 @@ export function loadImage(url) {
   });
 }
 
+export function loadLevel(name) {
+  return fetch(`/src/levels/${name}.json`).then(r => r.json());
+}
 

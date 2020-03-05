@@ -1,31 +1,12 @@
-class SpriteSheet {
-    constructor(image,width,height){
-        this.image = image;
-        this.width = width;
-        this.height = height;
-        this.tiles = new Map();
-    }
+export default class SpriteSheet {
+  constructor(image, w = 128, h = 128) {
+    this.image = image;
+    this.width = w;
+    this.height = h;
+  }
 
-    define(name,x,y){ 
-        const tile = document.createElement('canvas');
-        tile.width = this.width;
-        tile.height = this.height;
-        tile
-        .getContext('2d')
-        .drawImage(
-            this.image,
-            x * this.width,
-            y * this.height,
-            this.width,
-            this.height
-        );
-        this.tiles.set(name,tile)
-    }
+  draw(context, x, y) {
+    context.drawImage(this.image, x, y);
+  }
 
-    draw(name,context,x,y){
-        const tile = this.tiles.get(name)
-        context.drawImage(tile,x,y)
-    }
 }
-
-export default SpriteSheet;
