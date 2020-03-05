@@ -64,7 +64,7 @@ function step(startTime) {
   const backgroundImage = new Image();
   backgroundImage.src = "/src/img/background/background_1.png";
   context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  renderLevel();
+  renderLevel(monkey);
 
   if (monkey.isIdle) {
     if (!timeWhenLastUpdate) {
@@ -102,7 +102,7 @@ function step(startTime) {
       monkey.x,
       monkey.y,
       monkey.width,
-      monkey.height
+      monkey.height,
     );
 
     timeWhenLastUpdate = startTime;
@@ -143,6 +143,7 @@ function step(startTime) {
     monkey.isIdle = false;
     monkey.running = false;
     monkey.jumping = true;
+    monkey.ground = false
   }
 
   if (controller.left) {
@@ -166,6 +167,7 @@ function step(startTime) {
     monkey.y = canvas.height - monkey.height;
     monkey.y_velocity = 0;
   }
+
   if (!key_state && !monkey.jumping) {
     monkey.isIdle = true; //this is probably in the wrong spot
     monkey.running = false;
@@ -196,7 +198,7 @@ const levelArray = [
   "                    ",
   "                    ",
   "                    ",
-  "                    ",
+  "               GR   ",
   "                   W",
   "                  WW",
   "                 WWW",
@@ -211,17 +213,28 @@ class Tile {
     this.height = height;
   }
   draw(context, tilePath, x, y) {
-    debugger
     let image = new Image();
     image.src = this.path + tilePath;
     context.drawImage(image, x, y, this.width, this.height);
   }
 }
 
-function renderLevel() {
+function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2){
+    // Check x and y for overlap
+    if (x2 > w1 + x1 || x1 > w2 + x2 || y2 > h1 + y1 || y1 > h2 + y2){
+        return false;
+    }
+    return true;
+};
+
+
+
+function renderLevel(monkey) {
+  
   const grass = "grass.png";
   const dirt = 'dirt.png'
   const woodenBox = 'wooden_box.png'
+  const platformEdgeRight = 'platform_right.png'
   const tile = new Tile(50, 50);
 
   let x = 0;
@@ -233,10 +246,36 @@ function renderLevel() {
      let singleTile = tileRow[col];
      if(singleTile === 'G'){
        tile.draw(context,grass,x,y)
+       if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+          monkey.y = y - monkey.height
+          monkey.jumping = false;
+          monkey.y_velocity = 0;
+
+       }
      } else if(singleTile === 'D'){
-      tile.draw(context, dirt, x, y);
+        tile.draw(context, dirt, x, y);
+      if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+          monkey.y = y - monkey.height
+          monkey.jumping = false;
+          monkey.y_velocity = 0;
+
+       } 
+       else if(singleTile === 'R'){
+        tile.draw(context, platformEdgeRight, x, y);
+      // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+      //     monkey.y = y - monkey.height
+      //     monkey.jumping = false;
+      //     monkey.y_velocity = 0;
+
+       }
      } else if (singleTile === 'W'){
        tile.draw(context,woodenBox,x,y)
+       if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+          monkey.y = y - monkey.height
+          monkey.jumping = false;
+          monkey.y_velocity = 0;
+
+       }
      }
      x += 50
    }
