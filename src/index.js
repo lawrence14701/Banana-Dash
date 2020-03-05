@@ -197,9 +197,9 @@ const levelArray = [
   "                    ",
   "                    ",
   "                    ",
-  "                    ",
-  "                    ",
-  "                    ",
+  "                   W",
+  "                  WW",
+  "                 WWW",
   "GGGGGGGGGGGGGGGGGGGG",
   "DDDDDDDDDDDDDDDDDDDD"
 ];
@@ -235,6 +235,8 @@ function renderLevel() {
        tile.draw(context,grass,x,y)
      } else if(singleTile === 'D'){
       tile.draw(context, dirt, x, y);
+     } else if (singleTile === 'W'){
+       tile.draw(context,woodenBox,x,y)
      }
      x += 50
    }
