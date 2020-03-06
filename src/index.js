@@ -18,12 +18,49 @@ var player = {
   velX: 0,
   velY: 0,
   color: "#ff0000",
+  jumping: false,
   jumpStrength: 7,
   draw: function() {
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 };
+
+var platforms = [];
+var platform_width = 120;
+var platform_height = 10;
+
+platforms.push({
+  x: canvas.width - 170,
+  y: 40,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 170,
+  y: canvas.height - 50,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 380,
+  y: canvas.height - 120,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 380,
+  y: canvas.height - 240,
+  width: platform_width,
+  height: platform_height
+});
+
+platforms.push({
+  x: canvas.width - 590,
+  y: canvas.height - 180,
+  width: platform_width,
+  height: platform_height
+});
 
 document.body.addEventListener("keydown", function(event) {
   if (event.keyCode == 13 && !gameStarted) {
@@ -49,11 +86,27 @@ function startGame() {
   }, 1000 / 30);
 }
 
+function draw_platforms(){
+  context.fillStyle = 'blue';
+  for(let i = 0; i < platforms.length; i++){
+    context.fillRect(
+      platforms[i].x,
+      platforms[i].y,
+      platforms[i].width,
+      platforms[i].height
+    );
+  }
+}
+
 function loop() {
   player.draw();
+  draw_platforms();
 
   if(keys[38] || keys[32 ]){ //user presses up arrow or space key
-    player.velY = -player.jumpStrength;
+    if(!player.jumping){
+      player.velY = -player.jumpStrength * 2;
+      player.jumping = true;
+    }
   }
 
   if (keys[39]) {
@@ -72,10 +125,15 @@ function loop() {
   player.y += player.velY;
   player.velX *= friction;
   player.velY += gravity;
+
+  if(player.y >= canvas.height - player.height){
+    player.y = canvas.height - player.height;
+    player.jumping = false;
+  }
 }
 
 function clearCanvas() {
-  context.clearRect(0, 0, 640, 360);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
