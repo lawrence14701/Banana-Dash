@@ -1,9 +1,80 @@
 import "./styles/index.scss";
+import { intro_screen } from './intro';
 
 
+var canvas = document.getElementById("game");
+var context = canvas.getContext("2d");
+var gameStarted = false;
+var keys = [];
+var friction = 0.8;
+
+var player = {
+  x: 5,
+  y: canvas.height - 20,
+  width: 20,
+  height: 20,
+  speed: 5,
+  velX: 0,
+  velY: 0,
+  color: "#ff0000",
+  jumpStrength: 7,
+  draw: function() {
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
+};
+
+document.body.addEventListener("keydown", function(event) {
+  if (event.keyCode == 13 && !gameStarted) {
+    startGame();
+  }
+  keys[event.keyCode] = true;
+});
+
+document.body.addEventListener("keyup", function(event) {
+  keys[event.keyCode] = false;
+});
+
+intro_screen(canvas,context);
 
 
+function startGame() {
+  gameStarted = true;
+  clearCanvas();
 
+  setInterval(function() {
+    clearCanvas();
+    loop();
+  }, 1000 / 30);
+}
+
+function loop() {
+  player.draw();
+
+  if(keys[38] || keys[32 ]){ //user presses up arrow or space key
+    player.velY = -player.jumpStrength;
+  }
+
+  if (keys[39]) {
+    if (player.velX < player.speed) {
+      player.velX++;
+    }
+  }
+
+  if (keys[37]) {
+    if (player.velX > -player.speed) {
+      player.velX--;
+    }
+  }
+
+  player.x += player.velX;
+  player.y += player.velY
+  player.velX *= friction;
+}
+
+function clearCanvas() {
+  context.clearRect(0, 0, 640, 360);
+}
 
 
 
