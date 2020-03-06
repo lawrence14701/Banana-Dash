@@ -197,15 +197,8 @@ const levelArray = [
   "                    ",
   "                    ",
   "                    ",
-  "                    ",
   "               GR   ",
   "                   W",
-  "                  WW",
-  "                 WWW",
-  "GGGGGGGGGGGGGGGGGGGG",
-  "DDDDDDDDDDDDDDDDDDDD"
-];
-
 class Tile {
   constructor(width, height) {
     this.path = "./src/img/tiles/";
@@ -250,6 +243,7 @@ function renderLevel(monkey) {
           monkey.y = y - monkey.height
           monkey.jumping = false;
           monkey.y_velocity = 0;
+          // monkey.x = x - 25;
 
        }
      } else if(singleTile === 'D'){
@@ -260,6 +254,16 @@ function renderLevel(monkey) {
           monkey.y_velocity = 0;
 
        } 
+       else if(singleTile === 'B'){
+         debugger
+        tile.draw(context, banana, 10, 10);
+      if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+          monkey.y = y - monkey.height
+          monkey.jumping = false;
+          monkey.y_velocity = 0;
+
+       } 
+      }
        else if(singleTile === 'R'){
         tile.draw(context, platformEdgeRight, x, y);
       // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
