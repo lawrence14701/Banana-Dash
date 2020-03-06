@@ -29,29 +29,43 @@ var player = {
   }
 };
 
-document.body.addEventListener("keydown", function(event) {
-  if (event.keyCode == 13 && !gameStarted) {
-    startGame();
+function collisionCheck(chracter,platform){
+  var vectorX = (character.x + (character.width/2) - (platform.x + (platform.width/2)))
+  var vectorY = (character.y + (character.height/2) - (platform.y + (platform.height/2)))
+
+  var halfWidths = (character.width/2) + (platform.width/2)
+  var halfHeights = (character.height / 2) + (platform.height / 2);
+
+  var collisionDirection = null;
+
+  if(Math.abs(vectorX) < halfWidths && Math.abs(vectorY) < halfHeights){
+    var offsetX = halfWidths - Math.abs(vectorX);
+    var offsetY = halfHeights - Math.abs(vectorY)
+    if(offsetX < offsetY){
+      if(vectorX > 0){
+        collisionDirection = 'left'
+        character.x += offsetX;
+      } else {
+        collisionDirection = 'right'
+        character.x -= offsetX
+      }
+    } else {
+       if (vectorY > 0) {
+         collisionDirection = "top";
+         character.y += offsetY;
+       } else {
+         collisionDirection = "bottom";
+         character.y -= offsetY;
+       }
+    }
   }
-  keys[event.keyCode] = true;
-});
 
-document.body.addEventListener("keyup", function(event) {
-  keys[event.keyCode] = false;
-});
+  return collisionDirection
 
-intro_screen(canvas,context);
-
-
-function startGame() {
-  gameStarted = true;
-  clearCanvas();
-
-  setInterval(function() {
-    clearCanvas();
-    loop();
-  }, 1000 / 30);
 }
+
+
+
 
 
 
@@ -91,17 +105,38 @@ function loop() {
   }
 }
 
+
+
+
+
+
+
+
+function startGame() {
+  gameStarted = true;
+  clearCanvas();
+
+  setInterval(function() {
+    clearCanvas();
+    loop();
+  }, 1000 / 30);
+}
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+document.body.addEventListener("keydown", function(event) {
+  if (event.keyCode == 13 && !gameStarted) {
+    startGame();
+  }
+  keys[event.keyCode] = true;
+});
 
+document.body.addEventListener("keyup", function(event) {
+  keys[event.keyCode] = false;
+});
 
-
-
-
-
-
+intro_screen(canvas, context);
 
 
 
