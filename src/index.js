@@ -2,8 +2,6 @@ import "./styles/index.scss";
 import { intro_screen } from './intro';
 import Platforms from './platforms';
 
-
-
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
 var platforms = new Platforms(canvas,context,120,10)
@@ -22,6 +20,7 @@ var player = {
   velY: 0,
   color: "#ff0000",
   jumping: false,
+  grounded: false,
   jumpStrength: 7,
   draw: function() {
     context.fillStyle = this.color;
@@ -29,40 +28,101 @@ var player = {
   }
 };
 
-function collisionCheck(chracter,platform){
-  var vectorX = (character.x + (character.width/2) - (platform.x + (platform.width/2)))
-  var vectorY = (character.y + (character.height/2) - (platform.y + (platform.height/2)))
+function collisionCheck(character, platform) {
+  var vectorX =
+    character.x + character.width / 2 - (platform.x + platform.width / 2);
+  var vectorY =
+    character.y + character.height / 2 - (platform.y + platform.height / 2);
 
-  var halfWidths = (character.width/2) + (platform.width/2)
-  var halfHeights = (character.height / 2) + (platform.height / 2);
+  var halfWidths = character.width / 2 + platform.width / 2;
+  var halfHeights = character.height / 2 + platform.height / 2;
 
   var collisionDirection = null;
 
-  if(Math.abs(vectorX) < halfWidths && Math.abs(vectorY) < halfHeights){
+  if (Math.abs(vectorX) < halfWidths && Math.abs(vectorY) < halfHeights) {
     var offsetX = halfWidths - Math.abs(vectorX);
-    var offsetY = halfHeights - Math.abs(vectorY)
-    if(offsetX < offsetY){
-      if(vectorX > 0){
-        collisionDirection = 'left'
+    var offsetY = halfHeights - Math.abs(vectorY);
+    if (offsetX < offsetY) {
+      if (vectorX > 0) {
+        collisionDirection = "left";
         character.x += offsetX;
       } else {
-        collisionDirection = 'right'
-        character.x -= offsetX
+        collisionDirection = "right";
+        character.x -= offsetX;
       }
     } else {
-       if (vectorY > 0) {
-         collisionDirection = "top";
-         character.y += offsetY;
-       } else {
-         collisionDirection = "bottom";
-         character.y -= offsetY;
-       }
+      if (vectorY > 0) {
+        collisionDirection = "top";
+        character.y += offsetY;
+      } else {
+        collisionDirection = "bottom";
+        character.y -= offsetY;
+      }
     }
   }
 
-  return collisionDirection
-
+  return collisionDirection;
 }
+/////////////////IWANTTODELETE///////////////////////
+
+
+var platforms = [];
+var platform_width = 120;
+var platform_height = 10;
+
+platforms.push({
+  x: canvas.width - 170,
+  y: 40,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 170,
+  y: canvas.height - 50,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 380,
+  y: canvas.height - 120,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: canvas.width - 380,
+  y: canvas.height - 240,
+  width: platform_width,
+  height: platform_height
+});
+
+platforms.push({
+  x: canvas.width - 590,
+  y: canvas.height - 180,
+  width: platform_width,
+  height: platform_height
+});
+platforms.push({
+  x: 0,
+  y: canvas.height - 5,
+  width: canvas.width,
+  height: platform_height
+});
+
+function draw_platforms() {
+  context.fillStyle = "#333333";
+
+  for (var i = 0; i < platforms.length; i++) {
+    context.fillRect(
+      platforms[i].x,
+      platforms[i].y,
+      platforms[i].width,
+      platforms[i].height
+    );
+  }
+}
+
+
+///////////////////////////////////////////////////
 
 
 
@@ -70,13 +130,11 @@ function collisionCheck(chracter,platform){
 
 
 function loop() {
+  draw_platforms();
   player.draw();
-  platforms.define('test',590,180) // my plan is to loop through levels imported from another file
 
-  platforms.draw_platforms('test');
-
-  if(keys[38] || keys[32 ]){ //user presses up arrow or space key
-    if(!player.jumping){
+  if (keys[38] || keys[32]) {
+    if (!player.jumping) {
       player.velY = -player.jumpStrength * 2;
       player.jumping = true;
     }
@@ -96,17 +154,28 @@ function loop() {
 
   player.x += player.velX;
   player.y += player.velY;
+
   player.velX *= friction;
   player.velY += gravity;
 
-  if(player.y >= canvas.height - player.height){
-    player.y = canvas.height - player.height;
-    player.jumping = false;
+  player.grounded = false;
+  for (var i = 0; i < platforms.length; i++) {
+    var direction = collisionCheck(player, platforms[i]);
+
+    if (direction == "left" || direction == "right") {
+      player.velX = 0;
+    } else if (direction == "bottom") {
+      player.jumping = false;
+      player.grounded = true;
+    } else if (direction == "top") {
+      player.velY *= -1;
+    }
+  }
+
+  if (player.grounded) {
+    player.velY = 0;
   }
 }
-
-
-
 
 
 
