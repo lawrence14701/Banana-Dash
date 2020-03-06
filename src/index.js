@@ -1,9 +1,12 @@
 import "./styles/index.scss";
 import { intro_screen } from './intro';
+import Platforms from './platforms';
+
 
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
+var platforms = new Platforms(canvas,context,120,10)
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
@@ -25,42 +28,6 @@ var player = {
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 };
-
-var platforms = [];
-var platform_width = 120;
-var platform_height = 10;
-
-platforms.push({
-  x: canvas.width - 170,
-  y: 40,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 170,
-  y: canvas.height - 50,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 380,
-  y: canvas.height - 120,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 380,
-  y: canvas.height - 240,
-  width: platform_width,
-  height: platform_height
-});
-
-platforms.push({
-  x: canvas.width - 590,
-  y: canvas.height - 180,
-  width: platform_width,
-  height: platform_height
-});
 
 document.body.addEventListener("keydown", function(event) {
   if (event.keyCode == 13 && !gameStarted) {
@@ -86,21 +53,13 @@ function startGame() {
   }, 1000 / 30);
 }
 
-function draw_platforms(){
-  context.fillStyle = 'blue';
-  for(let i = 0; i < platforms.length; i++){
-    context.fillRect(
-      platforms[i].x,
-      platforms[i].y,
-      platforms[i].width,
-      platforms[i].height
-    );
-  }
-}
+
 
 function loop() {
   player.draw();
-  draw_platforms();
+  platforms.define('test',590,180) // my plan is to loop through levels imported from another file
+
+  platforms.draw_platforms('test');
 
   if(keys[38] || keys[32 ]){ //user presses up arrow or space key
     if(!player.jumping){
