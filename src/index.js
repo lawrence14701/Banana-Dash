@@ -36,7 +36,9 @@ var monkey = {
   x_velocity: 0,
   y_velocity: 0,
   x: 100,
-  y: 0
+  y: 0,
+  cropX: 15,
+  cropY: 15,
 };
 
 const controller = {
@@ -195,10 +197,10 @@ const levelArray = [
   "                    ",
   "                    ",
   "                    ",
-  "                    ",
-  "                    ",
-  "                    ",
-  "               GR   ",
+  "      B             ",
+  "      W             ",
+  "      W   B         ",
+  "      GGGGGGGGGGG   ",
   "                   W",
   "                  WW",
   "                 WWW",
@@ -235,6 +237,7 @@ function renderLevel(monkey) {
   const dirt = 'dirt.png'
   const woodenBox = 'wooden_box.png'
   const platformEdgeRight = 'platform_right.png'
+  const banana = 'banana.png'
   const tile = new Tile(50, 50);
 
   let x = 0;
@@ -250,6 +253,7 @@ function renderLevel(monkey) {
           monkey.y = y - monkey.height
           monkey.jumping = false;
           monkey.y_velocity = 0;
+          // monkey.x = x - 25;
 
        }
      } else if(singleTile === 'D'){
@@ -260,6 +264,16 @@ function renderLevel(monkey) {
           monkey.y_velocity = 0;
 
        } 
+       else if(singleTile === 'B'){
+         debugger
+        tile.draw(context, banana, 10, 10);
+      if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+          monkey.y = y - monkey.height
+          monkey.jumping = false;
+          monkey.y_velocity = 0;
+
+       } 
+      }
        else if(singleTile === 'R'){
         tile.draw(context, platformEdgeRight, x, y);
       // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
@@ -288,3 +302,17 @@ function renderLevel(monkey) {
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup", controller.keyListener);
 window.requestAnimationFrame(step);
+
+
+
+
+let simpleLevelPlan = `
+......................
+..#................#..
+..#..............=.#..
+..#.........o.o....#..
+..#.@......#####...#..
+..#####............#..
+......#++++++++++++#..
+......##############..
+......................`;
