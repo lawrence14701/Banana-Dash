@@ -1,88 +1,85 @@
-import "./styles/index.scss";
+// import "./styles/index.scss";
 
 var canvas = document.getElementById("game");
-var context = canvas.getContext("2d");
-var keys = [] //array of keys with values of true or false that determine whether a key has been pressed down or not
-var friction = 0.8;
+var context = canvas.getContext('2d');
+// var gameStarted = false;
+// var keys = [];
+// var friction = 0.8;
 
-var gameStarted = false;
+// var player = {
+// 	x: 5,
+// 	y: canvas.height - 20,
+// 	width: 20,
+// 	height: 20,
+// 	speed: 5,
+// 	velX: 0,
+// 	velY: 0,
+// 	color: "#ff0000",
+// 	draw: function(){
+// 		context.fillStyle = this.color;
+// 		context.fillRect(this.x, this.y, this.width, this.height);
+// 	}
+// }
 
-var player = {
-  x: 5,
-  y: canvas.height - 20,
-  width: 20,
-  height: 20,
-  speed: 5,
-  velX: 0,
-  velY: 0,
-  color: "#ff0000",
-  draw: function() {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
-  }
-};
+// document.body.addEventListener("keydown", function(event){
 
-document.body.addEventListener("keydown", function(event) {
-  if (event.keyCode == 13 && !gameStarted) {
-    startGame();
-  }
-  keys[event.keyCode] = true;
-});
+// 	if(event.keyCode == 13 && !gameStarted){
+// 		startGame();
+// 	}
+// 	keys[event.keyCode] = true;
 
-document.body.addEventListener("keyup", function(event) {
-  keys[event.keyCode] = false; 
-});
+// });
 
+// document.body.addEventListener("keyup", function(event){
+// 	keys[event.keyCode] = false;
+// });
 
-intro_screen(); //opens the intro screen
+// intro_screen();
 
-function intro_screen() {
-  context.font = "50px Impact";
-  context.fillStyle = "orange";
-  context.textAlign = "center";
-  context.fillText("Banana Dash", canvas.width / 2, canvas.height / 2);
+// function intro_screen(){
+// 	context.font = "50px Impact";
+// 	context.fillStyle = "#0099CC";
+// 	context.textAlign = "center";
+// 	context.fillText("HTML5 Game", canvas.width/2, canvas.height/2);
 
-  context.font = "20px Arial";
-  context.fillText(
-    "Press Enter To Start",
-    canvas.width / 2,
-    canvas.height / 2 + 50
-  );
-}
+// 	context.font = "20px Arial";
+// 	context.fillText("Press Enter To Start", canvas.width/2, canvas.height/2 + 50);
+// }
 
-function startGame() {
-  gameStarted = true;
-  clearCanvas();
+// function startGame(){
+// 	gameStarted = true;
+// 	clearCanvas();
 
-  //runs 30 frames per second
-  setInterval(function() {
-    clearCanvas();
-    loop();
-  }, 1000 / 30);
-}
+// 	setInterval(function(){
+// 		clearCanvas();
+// 		loop();
+// 	}, 1000/30)
+// }
 
-function loop() {
-  player.draw();
+// function loop(){
 
-  if (keys[39]) {
-    if (player.velX < player.speed) {
-      player.velX++;
-    }
-  }
+// 	player.draw();
 
-  if (keys[37]) {
-    if (player.velX > -player.speed) {
-      player.velX--;
-    }
-  }
+// 	if(keys[39]){
+// 		if(player.velX < player.speed){
+// 			player.velX++;
+// 		}
+// 	}
 
-  player.x += player.velX;
-  player.velX *= friction;
-}
+// 	if(keys[37]){
+// 		if(player.velX > -player.speed){
+// 			player.velX--;
+// 		}
+// 	}
 
-function clearCanvas() {
-  context.clearRect(0, 0, 640, 360);
-}
+// 	player.x += player.velX;
+// 	player.velX *= friction;
+
+// }
+
+// function clearCanvas(){
+// 	context.clearRect(0, 0, 640, 360);
+// }
 
 // const DURATION_IDLE = 200;
 // const DURATION_JUMPING = 100;
