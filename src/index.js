@@ -7,6 +7,7 @@ var context = canvas.getContext("2d");
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
+var gravity = 0.98;
 
 var player = {
   x: 5,
@@ -68,8 +69,9 @@ function loop() {
   }
 
   player.x += player.velX;
-  player.y += player.velY
+  player.y += player.velY;
   player.velX *= friction;
+  player.velY += gravity;
 }
 
 function clearCanvas() {
