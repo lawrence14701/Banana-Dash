@@ -9,6 +9,7 @@ var gameStarted = false;
 var keys = [];
 var friction = 0.8;
 var gravity = 0.98;
+var completed = false;
 
 var player = {
   x: 5,
@@ -28,17 +29,29 @@ var player = {
   }
 };
 
+var goal = {
+  x: canvas.width - 80,
+  y: 5,
+  width: 30,
+  height: 35,
+  color: 'green',
+  draw: function(){
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
+
 function collisionCheck(character, platform) {
-  var vectorX =
-    character.x + character.width / 2 - (platform.x + platform.width / 2);
-  var vectorY =
-    character.y + character.height / 2 - (platform.y + platform.height / 2);
+  //vector is distance between both the character and the platform
+  var vectorX = character.x + character.width / 2 - (platform.x + platform.width / 2); 
+  var vectorY =character.y + character.height / 2 - (platform.y + platform.height / 2);
 
   var halfWidths = character.width / 2 + platform.width / 2;
   var halfHeights = character.height / 2 + platform.height / 2;
 
   var collisionDirection = null;
 
+  //checking if the vector is less than halfwidth AKA collision
   if (Math.abs(vectorX) < halfWidths && Math.abs(vectorY) < halfHeights) {
     var offsetX = halfWidths - Math.abs(vectorX);
     var offsetY = halfHeights - Math.abs(vectorY);
@@ -101,9 +114,34 @@ platforms.push({
   width: platform_width,
   height: platform_height
 });
+
+//floor
 platforms.push({
   x: 0,
   y: canvas.height - 5,
+  width: canvas.width,
+  height: platform_height
+});
+//left wall
+platforms.push({
+  x: -10,
+  y: 0,
+  width: 10,
+  height: canvas.height
+});
+
+//right wall
+platforms.push({
+  x: canvas.width,
+  y: 0,
+  width: 10,
+  height: canvas.height
+});
+
+//ceiling
+platforms.push({
+  x: 0,
+  y: -10,
   width: canvas.width,
   height: platform_height
 });
@@ -130,8 +168,10 @@ function draw_platforms() {
 
 
 function loop() {
+  clearCanvas();
   draw_platforms();
   player.draw();
+  goal.draw();
 
   if (keys[38] || keys[32]) {
     if (!player.jumping) {
@@ -175,8 +215,40 @@ function loop() {
   if (player.grounded) {
     player.velY = 0;
   }
+
+  
+  if(collisionCheck(player,goal)){
+    complete();
+  }
+  if(!completed){
+    requestAnimationFrame(loop)
+  }
 }
 
+
+function complete(){
+  clearCanvas();
+  completed = true;
+
+  context.font = '50 px Impact';
+  context.fillStyle = 'orange';
+  context.textAlign='center';
+  context.fillText('You Won! Press enter to start again', canvas.width/2, canvas.height/2 + 50);
+
+  context.font = '20px Arial';
+  context.fillStyle('Press enter to play again', canvas.width/2, canvas.height/2)
+}
+
+function reset(){
+  player.x = 5;
+  player.y = canvas.height - 25;
+  player.grounded = true;
+  player.velY = 0;
+  player.velX = 0;
+  completed = false;
+
+  requestAnimationFrame(loop);
+}
 
 
 
@@ -185,10 +257,8 @@ function startGame() {
   gameStarted = true;
   clearCanvas();
 
-  setInterval(function() {
-    clearCanvas();
-    loop();
-  }, 1000 / 30);
+  requestAnimationFrame(loop);
+
 }
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -197,6 +267,9 @@ function clearCanvas() {
 document.body.addEventListener("keydown", function(event) {
   if (event.keyCode == 13 && !gameStarted) {
     startGame();
+  }
+  if (event.keyCode == 13 && completed) {
+    reset();
   }
   keys[event.keyCode] = true;
 });
