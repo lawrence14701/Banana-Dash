@@ -2,6 +2,7 @@ import "./styles/index.scss";
 import { intro_screen } from './intro';
 import Platforms from './platforms';
 import {collisionCheck} from './collisionCheck';
+import LevelMaker from './levels';
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
@@ -13,8 +14,8 @@ var gravity = 0.98;
 var completed = false;
 
 var player = {
-  x: 5,
-  y: canvas.height - 20,
+  x: 20,
+  y: 100,
   width: 20,
   height: 20,
   speed: 5,
@@ -41,6 +42,9 @@ var goal = {
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
+
+
+
 
 
 /////////////////IWANTTODELETE///////////////////////
@@ -113,19 +117,6 @@ platforms.push({
   height: platform_height
 });
 
-function draw_platforms() {
-  context.fillStyle = "#333333";
-
-  for (var i = 0; i < platforms.length; i++) {
-    context.fillRect(
-      platforms[i].x,
-      platforms[i].y,
-      platforms[i].width,
-      platforms[i].height
-    );
-  }
-}
-
 
 ///////////////////////////////////////////////////
 
@@ -136,7 +127,8 @@ function draw_platforms() {
 
 function loop() {
   clearCanvas();
-  draw_platforms();
+  const levels = new LevelMaker(canvas,context)
+  levels.draw_platforms();
   player.draw();
   goal.draw();
 
@@ -166,8 +158,8 @@ function loop() {
   player.velY += gravity;
 
   player.grounded = false;
-  for (var i = 0; i < platforms.length; i++) {
-    var direction = collisionCheck(player, platforms[i]);
+  for (var i = 0; i < levels.platforms.length; i++) {
+    var direction = collisionCheck(player, levels.platforms[i]);
 
     if (direction == "left" || direction == "right") {
       player.velX = 0;
