@@ -1,5 +1,18 @@
+# Banana Dash
 
-Collision Detection Algo
+#### A simple platform jumping game where the user plays as a monkey character. The player is given the challenge of collecting bananas in each level. Only once the player collects all the bananas will he/she move onto the next level
+
+# Live link
+
+<a href='https://lawrence14701.github.io/Banana-Dash/'>Click here to go to live version of Banana Dash</a>
+
+
+
+
+
+
+
+# Collision Detection Algo
 
 ```javascript
 export function collisionCheck(character, platform) {
@@ -41,7 +54,7 @@ export function collisionCheck(character, platform) {
 }
 ```
 
-#In my main loop function I iterate over my platforms objects with my player objects. Here is a snippet of my loop function where I implement this concept. 
+## In my main loop function I iterate over my platforms objects with my player objects. Here is a snippet of my loop function where I implement this concept. 
 
 ```javascript
 player.grounded = false;
