@@ -1,12 +1,10 @@
 import "./styles/index.scss";
 import { intro_screen } from './intro';
-import Platforms from './platforms';
 import {collisionCheck} from './collisionCheck';
 import LevelMaker from './levels';
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
-var platforms = new Platforms(canvas,context,120,10)
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
@@ -42,88 +40,6 @@ var goal = {
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
-
-
-
-
-
-/////////////////IWANTTODELETE///////////////////////
-
-
-var platforms = [];
-var platform_width = 120;
-var platform_height = 10;
-
-platforms.push({
-  x: canvas.width - 170,
-  y: 40,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 170,
-  y: canvas.height - 50,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 380,
-  y: canvas.height - 120,
-  width: platform_width,
-  height: platform_height
-});
-platforms.push({
-  x: canvas.width - 380,
-  y: canvas.height - 240,
-  width: platform_width,
-  height: platform_height
-});
-
-platforms.push({
-  x: canvas.width - 590,
-  y: canvas.height - 180,
-  width: platform_width,
-  height: platform_height
-});
-
-//floor
-platforms.push({
-  x: 0,
-  y: canvas.height - 5,
-  width: canvas.width,
-  height: platform_height
-});
-//left wall
-platforms.push({
-  x: -10,
-  y: 0,
-  width: 10,
-  height: canvas.height
-});
-
-//right wall
-platforms.push({
-  x: canvas.width,
-  y: 0,
-  width: 10,
-  height: canvas.height
-});
-
-//ceiling
-platforms.push({
-  x: 0,
-  y: -10,
-  width: canvas.width,
-  height: platform_height
-});
-
-
-///////////////////////////////////////////////////
-
-
-
-
-
 
 function loop() {
   clearCanvas();
