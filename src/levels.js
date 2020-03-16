@@ -9,7 +9,9 @@ class LevelMaker {
         this.levelRows = 15; // level height, in tiles
         this.tileSize = 50; // tile size, in pixels
         this.playerCol = 5; // player starting column
-        this.playerRow = 4; // player starting column   
+        this.playerRow = 4; // player starting column 
+        // this.playerXPos = 0
+        // this.playerYPos = 0  
         this.levels = [
           [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
           [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //2
@@ -36,15 +38,22 @@ class LevelMaker {
         this.context.fillStyle = "#333333";
         for(let i = 0;i< this.levelRows;i++){
             for(let j=0;j< this.levelCols;j++){
+                let x = j*this.tileSize;
+                let y = i*this.tileSize;
                 if(this.levels[i][j]== 1){
                     this.platforms.push({
-                      x: j*this.tileSize,
-                      y: i*this.tileSize,
+                      x: x,
+                      y: y,
                       width: this.tileSize,
                       height: this.tileSize
                     });
                     this.context.fillRect(j*this.tileSize,i*this.tileSize,this.tileSize,this.tileSize);	
                 }
+                // if(this.levels[i][j]== 2){
+                //     this.playerYPos= this.playerRow*this.tileSize;				// converting Y player position from tiles to pixels
+	            //     this.playerXPos=this.playerCol*this.tileSize;               // converting X player position from tiles to pixels
+                // }
+
             }
         }
     }

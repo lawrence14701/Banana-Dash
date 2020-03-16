@@ -2,9 +2,15 @@ import "./styles/index.scss";
 import { intro_screen } from './intro';
 import {collisionCheck} from './collisionCheck';
 import LevelMaker from './levels';
+import Player from './player'
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
+// const player = new Player(10,10,context)
+const levels = new LevelMaker(canvas, context);
+canvas.width = levels.tileSize * levels.levelCols; //canvas size changes as I add or remove tiles
+canvas.height = levels.tileSize * levels.levelRows; //same as before
+
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
@@ -43,7 +49,6 @@ var goal = {
 
 function loop() {
   clearCanvas();
-  const levels = new LevelMaker(canvas,context)
   levels.draw_platforms();
   player.draw();
   goal.draw();
