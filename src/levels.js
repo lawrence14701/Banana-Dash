@@ -15,7 +15,7 @@ class LevelMaker {
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //2
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //3
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //4
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'B', 0, 0, 1], //5
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "B", 0, 0, 1], //5
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //6
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //7
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //8
@@ -28,11 +28,14 @@ class LevelMaker {
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] //15
     ];
     // 1, 2, 3, 4, 5, 6, 7, 8, 9 ,10,11,12,13,14,15,16
-    this.platforms = [];
+    this.platforms = {
+        tiles: [],
+        bananas: [],
+    };
   }
 
-  draw(x,y,width,height){
-    this.context.fillRect(x,y,width,height)
+  draw(x, y, width, height) {
+    this.context.fillRect(x, y, width, height);
   }
 
   draw_platforms() {
@@ -43,13 +46,13 @@ class LevelMaker {
         let x = j * this.tileSize;
         let y = i * this.tileSize;
         if (this.levels[i][j] === 1) {
-          this.platforms.push({
+          this.platforms.tiles.push({
             x: x,
             y: y,
             width: this.tileSize,
             height: this.tileSize
           });
-          this.draw(x,y,this.tileSize,this.tileSize)
+          this.draw(x, y, this.tileSize, this.tileSize);
         }
       }
     }

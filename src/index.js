@@ -86,10 +86,10 @@ function loop() {
 
   player.velX *= friction;
   player.velY += gravity;
-  debugger
+  let tiles = levels.platforms.tiles
   player.grounded = false;
-  for (var i = 0; i < levels.platforms.length; i++) {
-    var direction = collisionCheck(player, levels.platforms[i]);
+  for (var i = 0; i < tiles.length; i++) {
+    var direction = collisionCheck(player,tiles[i]);
 
     if (direction == "left" || direction == "right") {
       player.velX = 0;
