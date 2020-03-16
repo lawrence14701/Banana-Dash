@@ -17,23 +17,26 @@ var friction = 0.8;
 var gravity = 0.98;
 var completed = false;
 
-var player = {
-  x: 20,
-  y: 100,
-  width: 20,
-  height: 20,
-  speed: 5,
-  velX: 0,
-  velY: 0,
-  color: "#ff0000",
-  jumping: false,
-  grounded: false,
-  jumpStrength: 7,
-  draw: function() {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
-  }
-};
+let startX = levels.start()[0]
+let startY = levels.start()[1];
+const player = new Player(startX,startY,20,20,context)
+// var player = {
+//   x: startX,
+//   y: startY,
+//   width: 20,
+//   height: 20,
+//   speed: 5,
+//   velX: 0,
+//   velY: 0,
+//   color: "#ff0000",
+//   jumping: false,
+//   grounded: false,
+//   jumpStrength: 7,
+//   draw: function() {
+//     context.fillStyle = this.color;
+//     context.fillRect(this.x, this.y, this.width, this.height);
+//   }
+// };
 
 var goal = {
   x: canvas.width - 80,

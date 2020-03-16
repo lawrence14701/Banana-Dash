@@ -1,6 +1,8 @@
 export default class Player {
-  constructor(width, height,context) {
+  constructor(x,y,width, height,context) {
     this.context = context
+    this.x = x;
+    this.y = y;
     this.width = width;
     this.height = height;
     this.speed = 5;
@@ -11,9 +13,8 @@ export default class Player {
     this.grounded = false;
     this.jumpStrength = 7;
   }
- 
-  draw(x,y) {
+  draw() {
      this.context.fillStyle = this.color;
-     this.context.fillRect(x, y, this.width, this.height);
+     this.context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
