@@ -20,6 +20,12 @@ var completed = false;
 let startX = levels.start()[0]
 let startY = levels.start()[1];
 const player = new Player(startX,startY,20,20,context)
+function startGame() {
+  gameStarted = true;
+  clearCanvas();
+
+  requestAnimationFrame(loop);
+}
 // var player = {
 //   x: startX,
 //   y: startY,
@@ -80,7 +86,7 @@ function loop() {
 
   player.velX *= friction;
   player.velY += gravity;
-
+  debugger
   player.grounded = false;
   for (var i = 0; i < levels.platforms.length; i++) {
     var direction = collisionCheck(player, levels.platforms[i]);
@@ -136,13 +142,7 @@ function reset(){
 
 
 
-function startGame() {
-  gameStarted = true;
-  clearCanvas();
 
-  requestAnimationFrame(loop);
-
-}
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
