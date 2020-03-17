@@ -1,12 +1,11 @@
 import "./styles/index.scss";
-import { intro_screen } from './intro';
-import {collisionCheck} from './collisionCheck';
-import LevelMaker from './levels';
-import Player from './player'
+import { intro_screen } from "./intro";
+import { collisionCheck } from "./collisionCheck";
+import LevelMaker from "./levels";
+import Player from "./player";
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
-// const player = new Player(10,10,context)
 const levels = new LevelMaker(canvas, context);
 canvas.width = levels.tileSize * levels.levelCols; //canvas size changes as I add or remove tiles
 canvas.height = levels.tileSize * levels.levelRows; //same as before
@@ -16,14 +15,13 @@ var keys = [];
 var friction = 0.8;
 var gravity = 0.98;
 var completed = false;
-
-let startX = levels.start()[0]
+let startX = levels.start()[0];
 let startY = levels.start()[1];
-const player = new Player(startX,startY,20,20,context)
+const player = new Player(startX, startY, 20, 20, context);
+
 function startGame() {
   gameStarted = true;
   clearCanvas();
-
   requestAnimationFrame(loop);
 }
 // var player = {
@@ -44,23 +42,17 @@ function startGame() {
 //   }
 // };
 
-var goal = {
-  x: canvas.width - 80,
-  y: 5,
-  width: 30,
-  height: 35,
-  color: 'green',
-  draw: function(){
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
-  }
-}
-
 function loop() {
   clearCanvas();
+
+  const backgroundImage = new Image();
+  backgroundImage.src = "/src/img/tile.png";
+  backgroundImage.onload = function() {
+    context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+  };
+
   levels.draw_platforms();
   player.draw();
-  goal.draw();
 
   if (keys[38] || keys[32]) {
     if (!player.jumping) {
@@ -86,10 +78,10 @@ function loop() {
 
   player.velX *= friction;
   player.velY += gravity;
-  let tiles = levels.platforms.tiles
+  let tiles = levels.platforms.tiles;
   player.grounded = false;
   for (var i = 0; i < tiles.length; i++) {
-    var direction = collisionCheck(player,tiles[i]);
+    var direction = collisionCheck(player, tiles[i]);
 
     if (direction == "left" || direction == "right") {
       player.velX = 0;
@@ -97,7 +89,7 @@ function loop() {
       player.jumping = false;
       player.grounded = true;
     } else if (direction == "top") {
-      player.velY *= -1;
+      player.velY *= -0.01;
     }
   }
 
@@ -105,30 +97,37 @@ function loop() {
     player.velY = 0;
   }
 
-  
-  if(collisionCheck(player,goal)){
+  let goal = levels.platforms.bananas[0];
+  if (collisionCheck(player, goal)) {
     complete();
   }
-  if(!completed){
-    requestAnimationFrame(loop)
+  if (!completed) {
+    requestAnimationFrame(loop);
   }
 }
 
-
-function complete(){
+function complete() {
   clearCanvas();
   completed = true;
 
-  context.font = '50 px Impact';
-  context.fillStyle = 'orange';
-  context.textAlign='center';
-  context.fillText('You Won! Press enter to start again', canvas.width/2, canvas.height/2 + 50);
+  context.font = "50 px Impact";
+  context.fillStyle = "orange";
+  context.textAlign = "center";
+  context.fillText(
+    "You Won! Press enter to start again",
+    canvas.width / 2,
+    canvas.height / 2 + 50
+  );
 
-  context.font = '20px Arial';
-  context.fillStyle('Press enter to play again', canvas.width/2, canvas.height/2)
+  context.font = "20px Arial";
+  context.fillText(
+    "Press enter to play again",
+    canvas.width / 2,
+    canvas.height / 2
+  );
 }
 
-function reset(){
+function reset() {
   player.x = 5;
   player.y = canvas.height - 25;
   player.grounded = true;
@@ -138,10 +137,6 @@ function reset(){
 
   requestAnimationFrame(loop);
 }
-
-
-
-
 
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -162,34 +157,6 @@ document.body.addEventListener("keyup", function(event) {
 });
 
 intro_screen(canvas, context);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const canvas = document.getElementById("myCanvas");
 // const context = canvas.getContext("2d");
@@ -411,10 +378,8 @@ intro_screen(canvas, context);
 //     return true;
 // };
 
-
-
 // function renderLevel(monkey) {
-  
+
 //   const grass = "grass.png";
 //   const dirt = 'dirt.png'
 //   const woodenBox = 'wooden_box.png'
@@ -444,7 +409,7 @@ intro_screen(canvas, context);
 //           monkey.jumping = false;
 //           monkey.y_velocity = 0;
 
-//        } 
+//        }
 //        else if(singleTile === 'B'){
 //          debugger
 //         tile.draw(context, banana, 10, 10);
@@ -453,7 +418,7 @@ intro_screen(canvas, context);
 //           monkey.jumping = false;
 //           monkey.y_velocity = 0;
 
-//        } 
+//        }
 //       }
 //        else if(singleTile === 'R'){
 //         tile.draw(context, platformEdgeRight, x, y);
@@ -477,7 +442,7 @@ intro_screen(canvas, context);
 //     y += 40
 //     x = 0
 //   }
-  
+
 // }
 
 // window.addEventListener("keydown", controller.keyListener);

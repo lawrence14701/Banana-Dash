@@ -12,30 +12,34 @@ class LevelMaker {
     this.playerRow = 0; // player starting column
     this.levels = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //2
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //3
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //4
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "B", 0, 0, 1], //5
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //6
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //7
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //8
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //9
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //10
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //11
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //12
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //13
-      [1, "P", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], //14
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //2
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //3
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //4
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "B", 0, 0, 'R'], //5
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'l', '_', 'r', 0, 'R'], //6
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 'l', '_', 'r', 0, 0, 0, 'R'], //7
+      ['L', 0, 0, 0, 'l', '_', 'r', 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //8
+      ['L', 0, 0, 0, 0, 0, 0, 'l', '_', 'r', 0, 0, 0, 0, 0, 'R'], //9
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //10
+      ['L', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'w', 'w', 0, 0, 'R'], //11
+      ['L', 0, 0, 0, 0, 0, 0, 0, 'l', '_', '_', '_', 'r', 0, 0, 'R'], //12
+      ['L', 0, 0, 'l', '_','r', 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //13
+      ['L', "P", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'R'], //14
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] //15
     ];
     // 1, 2, 3, 4, 5, 6, 7, 8, 9 ,10,11,12,13,14,15,16
     this.platforms = {
-        tiles: [],
-        bananas: [],
+      tiles: [],
+      bananas: []
     };
   }
 
-  draw(x, y, width, height) {
-    this.context.fillRect(x, y, width, height);
+  draw(x, y, width, height, url) {
+   let image = new Image();
+   image.src = "/src/img/" + url;
+//    image.onload = function() {
+     this.context.drawImage(image, x, y, width, height);
+//    };
   }
 
   draw_platforms() {
@@ -45,14 +49,78 @@ class LevelMaker {
       for (let j = 0; j < this.levelCols; j++) {
         let x = j * this.tileSize;
         let y = i * this.tileSize;
-        if (this.levels[i][j] === 1) {
+
+        if (this.levels[i][j] === 1) { 
           this.platforms.tiles.push({
             x: x,
             y: y,
             width: this.tileSize,
             height: this.tileSize
           });
-          this.draw(x, y, this.tileSize, this.tileSize);
+          this.draw(x, y, this.tileSize, this.tileSize,'tiles/grass.png');
+        }
+        if (this.levels[i][j] === "w") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/wooden_box.png");
+        }
+        if (this.levels[i][j] === "l") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform_edge_left.png");
+        }
+         if (this.levels[i][j] === '_') {
+           this.platforms.tiles.push({
+             x: x,
+             y: y,
+             width: this.tileSize,
+             height: this.tileSize
+           });
+           this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform.png");
+        }
+          if (this.levels[i][j] === "r") {
+            this.platforms.tiles.push({
+              x: x,
+              y: y,
+              width: this.tileSize,
+              height: this.tileSize
+            });
+            this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform_edge_right.png");
+          }
+         if (this.levels[i][j] === 'R') {
+           this.platforms.tiles.push({
+             x: x,
+             y: y,
+             width: this.tileSize,
+             height: this.tileSize
+           });
+           this.draw(x, y, this.tileSize, this.tileSize, "tiles/right.png");
+         }
+            if (this.levels[i][j] === "L") {
+              this.platforms.tiles.push({
+                x: x,
+                y: y,
+                width: this.tileSize,
+                height: this.tileSize
+              });
+              this.draw(x, y, this.tileSize, this.tileSize, "tiles/left.png");
+            }
+        if (this.levels[i][j] === "B") {
+          this.platforms.bananas.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize,'collectable/banana.png');
         }
       }
     }
