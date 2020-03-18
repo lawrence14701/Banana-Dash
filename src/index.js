@@ -10,6 +10,10 @@ const levels = new LevelMaker(canvas, context);
 canvas.width = levels.tileSize * levels.levelCols; //canvas size changes as I add or remove tiles
 canvas.height = levels.tileSize * levels.levelRows; //same as before
 
+//sound
+var sound = document.getElementById("background-music");
+
+var soundFlag = false;
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
@@ -17,39 +21,29 @@ var gravity = 0.98;
 var completed = false;
 let startX = levels.start()[0];
 let startY = levels.start()[1];
-const player = new Player(startX, startY, 20, 20, context);
+const player = new Player(startX, startY, 60, 60, context);
 
 function startGame() {
   gameStarted = true;
+  soundFlag = true;
+  if (soundFlag === true) {
+    //restart the background music when it hits the end
+    sound.addEventListener("ended", function() {
+        this.currentTime = 0;
+        this.play();
+      },
+      false
+      );
+    sound.play();
+  }
   clearCanvas();
   requestAnimationFrame(loop);
 }
-// var player = {
-//   x: startX,
-//   y: startY,
-//   width: 20,
-//   height: 20,
-//   speed: 5,
-//   velX: 0,
-//   velY: 0,
-//   color: "#ff0000",
-//   jumping: false,
-//   grounded: false,
-//   jumpStrength: 7,
-//   draw: function() {
-//     context.fillStyle = this.color;
-//     context.fillRect(this.x, this.y, this.width, this.height);
-//   }
-// };
+
 
 function loop() {
   clearCanvas();
 
-  const backgroundImage = new Image();
-  backgroundImage.src = "/src/img/tile.png";
-  backgroundImage.onload = function() {
-    context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-  };
 
   levels.draw_platforms();
   player.draw();
@@ -108,6 +102,7 @@ function loop() {
 
 function complete() {
   clearCanvas();
+  soundFlag = false
   completed = true;
 
   context.font = "50 px Impact";
@@ -128,8 +123,8 @@ function complete() {
 }
 
 function reset() {
-  player.x = 5;
-  player.y = canvas.height - 25;
+  player.x = 100;
+  player.y = 100;
   player.grounded = true;
   player.velY = 0;
   player.velX = 0;
@@ -158,8 +153,16 @@ document.body.addEventListener("keyup", function(event) {
 
 intro_screen(canvas, context);
 
-// const canvas = document.getElementById("myCanvas");
+// const canvas = document.getElementById("game");
 // const context = canvas.getContext("2d");
+
+//  for (var i = 1; i < NUMBER_OF_IDLE_IMAGES + 1; i++) {
+//     document.body.append("<div id='preload-image-'"+NUMBER_OF_IDLE_IMAGES+"' style='background-image: url("+NUMBER_OF_IDLE_IMAGES+");'></div>");
+//   }
+
+//   for (var i = 1; i < NUMBER_OF_RUNNING_IMAGES + 1; i++) {
+//     document.body.append("<div id='preload-image-'"+NUMBER_OF_RUNNING_IMAGES+"' style='background-image: url("+NUMBER_OF_RUNNING_IMAGES+");'></div>");
+//   }
 
 // const DURATION_IDLE = 200;
 // const DURATION_JUMPING = 100;
@@ -173,9 +176,9 @@ intro_screen(canvas, context);
 // const NUMBER_OF_JUMPING_IMAGES = 4;
 // const NUMBER_OF_RUNNING_IMAGES = 13;
 
-// // const TIME_PER_IDLE_FRAME = DURATION_IDLE / NUMBER_OF_IDLE_IMAGES;
-// // const TIME_PER_JUMPING_FRAME = DURATION_JUMPING / NUMBER_OF_JUMPING_IMAGES;
-// // const TIME_PER_RUNNING_FRAME = DURATION_RUNNING / NUMBER_OF_RUNNING_IMAGES;
+// const TIME_PER_IDLE_FRAME = DURATION_IDLE / NUMBER_OF_IDLE_IMAGES;
+// const TIME_PER_JUMPING_FRAME = DURATION_JUMPING / NUMBER_OF_JUMPING_IMAGES;
+// const TIME_PER_RUNNING_FRAME = DURATION_RUNNING / NUMBER_OF_RUNNING_IMAGES;
 
 // var timeWhenLastUpdate;
 // var timeFromLastUpdate;
@@ -219,17 +222,19 @@ intro_screen(canvas, context);
 // };
 
 // function step(startTime) {
-//   const backgroundImage = new Image();
-//   backgroundImage.src = "/src/img/background/background_1.png";
-//   context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-//   renderLevel(monkey);
+//   // const backgroundImage = new Image();
+//   // backgroundImage.src = "/src/img/background/background_1.png";
+//   context.clearRect(0,0,canvas.width,canvas.height);
+//   // context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+//   // renderLevel(monkey);
 
 //   if (monkey.isIdle) {
 //     if (!timeWhenLastUpdate) {
 //       timeWhenLastUpdate = startTime;
 //     }
 //     timeFromLastUpdate = startTime - timeWhenLastUpdate;
-//     // if (timeFromLastUpdate > TIME_PER_IDLE_FRAME) {
+   
+//     if (timeFromLastUpdate > TIME_PER_IDLE_FRAME) {
 //     monkey.image.src = IDLE_MONKEY_PATH + "/idle_" + frameNumberIdle + ".png";
 //     context.drawImage(
 //       monkey.image,
@@ -245,7 +250,7 @@ intro_screen(canvas, context);
 //     } else {
 //       frameNumberIdle++;
 //     }
-//     // }
+//     }
 //   }
 //   if (monkey.jumping) {
 //     if (!timeWhenLastUpdate) {
@@ -277,7 +282,7 @@ intro_screen(canvas, context);
 //       timeWhenLastUpdate = startTime;
 //     }
 //     timeFromLastUpdate = startTime - timeWhenLastUpdate;
-//     //   if (timeFromLastUpdate > TIME_PER_RUNNING_FRAME) {
+//       if (timeFromLastUpdate > TIME_PER_RUNNING_FRAME) {
 //     monkey.image.src =
 //       RUNNING_MONKEY_PATH + "/running_" + frameNumberRunning + ".png";
 //     context.drawImage(
@@ -294,15 +299,15 @@ intro_screen(canvas, context);
 //     } else {
 //       frameNumberRunning++;
 //     }
-//     //   }
+//       }
 //   }
-//   if (controller.up && monkey.jumping == false) {
-//     monkey.y_velocity -= 30;
-//     monkey.isIdle = false;
-//     monkey.running = false;
-//     monkey.jumping = true;
-//     monkey.ground = false
-//   }
+//   // if (controller.up && monkey.jumping == false) {
+//   //   monkey.y_velocity -= 30;
+//   //   monkey.isIdle = false;
+//   //   monkey.running = false;
+//   //   monkey.jumping = true;
+//   //   monkey.ground = false
+//   // }
 
 //   if (controller.left) {
 //     monkey.x_velocity -= 0.5;
@@ -341,109 +346,109 @@ intro_screen(canvas, context);
 
 // ///////////////////////////////////////////////tiles and levels////////////////////////////////
 
-// const levelArray = [
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "                    ",
-//   "               GR   ",
-//   "                   W",
-// class Tile {
-//   constructor(width, height) {
-//     this.path = "./src/img/tiles/";
-//     this.width = width;
-//     this.height = height;
-//   }
-//   draw(context, tilePath, x, y) {
-//     let image = new Image();
-//     image.src = this.path + tilePath;
-//     context.drawImage(image, x, y, this.width, this.height);
-//   }
-// }
+// // const levelArray = [
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "                    ",
+// //   "               GR   ",
+// //   "                   W",
+// // class Tile {
+// //   constructor(width, height) {
+// //     this.path = "./src/img/tiles/";
+// //     this.width = width;
+// //     this.height = height;
+// //   }
+// //   draw(context, tilePath, x, y) {
+// //     let image = new Image();
+// //     image.src = this.path + tilePath;
+// //     context.drawImage(image, x, y, this.width, this.height);
+// //   }
+// // }
 
-// function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2){
-//     // Check x and y for overlap
-//     if (x2 > w1 + x1 || x1 > w2 + x2 || y2 > h1 + y1 || y1 > h2 + y2){
-//         return false;
-//     }
-//     return true;
-// };
+// // // function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2){
+// // //     // Check x and y for overlap
+// // //     if (x2 > w1 + x1 || x1 > w2 + x2 || y2 > h1 + y1 || y1 > h2 + y2){
+// // //         return false;
+// // //     }
+// // //     return true;
+// // // };
 
-// function renderLevel(monkey) {
+// // function renderLevel(monkey) {
 
-//   const grass = "grass.png";
-//   const dirt = 'dirt.png'
-//   const woodenBox = 'wooden_box.png'
-//   const platformEdgeRight = 'platform_right.png'
-//   const tile = new Tile(50, 50);
+// //   const grass = "grass.png";
+// //   const dirt = 'dirt.png'
+// //   const woodenBox = 'wooden_box.png'
+// //   const platformEdgeRight = 'platform_right.png'
+// //   const tile = new Tile(50, 50);
 
-//   let x = 0;
-//   let y = 0;
+// //   let x = 0;
+// //   let y = 0;
 
-//   for (let row = 0; row < levelArray.length; row++) {
-//     let tileRow = levelArray[row]
-//    for (let col = 0; col < tileRow.length; col++) {
-//      let singleTile = tileRow[col];
-//      if(singleTile === 'G'){
-//        tile.draw(context,grass,x,y)
-//        if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
-//           monkey.y = y - monkey.height
-//           monkey.jumping = false;
-//           monkey.y_velocity = 0;
-//           // monkey.x = x - 25;
+// //   for (let row = 0; row < levelArray.length; row++) {
+// //     let tileRow = levelArray[row]
+// //    for (let col = 0; col < tileRow.length; col++) {
+// //      let singleTile = tileRow[col];
+// //      if(singleTile === 'G'){
+// //        tile.draw(context,grass,x,y)
+// //        if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+// //           monkey.y = y - monkey.height
+// //           monkey.jumping = false;
+// //           monkey.y_velocity = 0;
+// //           // monkey.x = x - 25;
 
-//        }
-//      } else if(singleTile === 'D'){
-//         tile.draw(context, dirt, x, y);
-//       if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
-//           monkey.y = y - monkey.height
-//           monkey.jumping = false;
-//           monkey.y_velocity = 0;
+// //        }
+// //      } else if(singleTile === 'D'){
+// //         tile.draw(context, dirt, x, y);
+// //       if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+// //           monkey.y = y - monkey.height
+// //           monkey.jumping = false;
+// //           monkey.y_velocity = 0;
 
-//        }
-//        else if(singleTile === 'B'){
-//          debugger
-//         tile.draw(context, banana, 10, 10);
-//       if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
-//           monkey.y = y - monkey.height
-//           monkey.jumping = false;
-//           monkey.y_velocity = 0;
+// //        }
+// //        else if(singleTile === 'B'){
+// //          debugger
+// //         tile.draw(context, banana, 10, 10);
+// //       // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+// //       //     monkey.y = y - monkey.height
+// //       //     monkey.jumping = false;
+// //       //     monkey.y_velocity = 0;
 
-//        }
-//       }
-//        else if(singleTile === 'R'){
-//         tile.draw(context, platformEdgeRight, x, y);
-//       // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
-//       //     monkey.y = y - monkey.height
-//       //     monkey.jumping = false;
-//       //     monkey.y_velocity = 0;
+// //       //  }
+// //       }
+// //        else if(singleTile === 'R'){
+// //         tile.draw(context, platformEdgeRight, x, y);
+// //       // if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+// //       //     monkey.y = y - monkey.height
+// //       //     monkey.jumping = false;
+// //       //     monkey.y_velocity = 0;
 
-//        }
-//      } else if (singleTile === 'W'){
-//        tile.draw(context,woodenBox,x,y)
-//        if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
-//           monkey.y = y - monkey.height
-//           monkey.jumping = false;
-//           monkey.y_velocity = 0;
+// //        }
+// //      } else if (singleTile === 'W'){
+// //        tile.draw(context,woodenBox,x,y)
+// //        if (rectIntersect(x, y, 25, 25, monkey.x, monkey.y, monkey.width, monkey.height)){
+// //           monkey.y = y - monkey.height
+// //           monkey.jumping = false;
+// //           monkey.y_velocity = 0;
 
-//        }
-//      }
-//      x += 50
-//    }
-//     y += 40
-//     x = 0
-//   }
+// //        }
+// //      }
+// //      x += 50
+// //    }
+// //     y += 40
+// //     x = 0
+// //   }
 
-// }
+// // }
 
 // window.addEventListener("keydown", controller.keyListener);
 // window.addEventListener("keyup", controller.keyListener);
