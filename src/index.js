@@ -41,6 +41,7 @@ function startGame() {
   }
   clearCanvas();
   requestAnimationFrame(loop);
+  // loop();
 }
 
 function loop() {
@@ -106,6 +107,7 @@ function loop() {
   }
   if (!completed) {
     requestAnimationFrame(loop);
+    // loop();
   }
 }
 
@@ -159,9 +161,9 @@ intro_screen(canvas, context);
 //     document.body.append("<div id='preload-image-'"+NUMBER_OF_IDLE_IMAGES+"' style='background-image: url("+NUMBER_OF_IDLE_IMAGES+");'></div>");
 //   }
 
-//   for (var i = 1; i < NUMBER_OF_RUNNING_IMAGES + 1; i++) {
-//     document.body.append("<div id='preload-image-'"+NUMBER_OF_RUNNING_IMAGES+"' style='background-image: url("+NUMBER_OF_RUNNING_IMAGES+");'></div>");
-//   }
+  // for (var i = 1; i < NUMBER_OF_R_IMAGES + 1; i++) {
+  //   document.body.append("<div id='preload-image-'"+NUMBER_OF_RUNNING_IMAGES+"' style='background-image: url("+NUMBER_OF_RUNNING_IMAGES+");'></div>");
+  // }
 
 // const DURATION_IDLE = 200;
 // const DURATION_JUMPING = 100;

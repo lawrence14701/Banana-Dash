@@ -18,7 +18,7 @@ export default class Player {
     this.idleMonkeyPath = "/src/img/idle/Idle_";
     this.durationIdle = 200;
     this.numberOfIdleImages = 17;
-    this.timePerIdleFrame = this.durationIdle / this.numberOfIdleImages;
+    this.timePerIdleFrame = 32;//this.durationIdle / this.numberOfIdleImages;
 
     this.timeWhenLastUpdate = null;
     this.timeFromLastUpdate = null;
@@ -27,6 +27,10 @@ export default class Player {
     this.frameNumberRunning = 0;
     this.started = false
     this.startTime = 0;
+
+     for (var i = 0; i < this.numberOfIdleImages; i++) {
+    document.body.append("<div id='preload-image-'"+i+"' style='background-image: url("+this.idleMonkeyPath+i +".png);'></div>");
+  }
 
     // const DURATION_JUMPING = 100;
     // const DURATION_RUNNING = 200;
@@ -41,29 +45,31 @@ export default class Player {
     // const TIME_PER_RUNNING_FRAME = DURATION_RUNNING / NUMBER_OF_RUNNING_IMAGES;
   }
   draw() {
-    if(!this.started){
+    // if(!this.started){
       this.startTime = performance.now();
-      this.started = true;
-    }
+      // this.started = true;
+    // }
     this.idle();
   }
 
   idle() {
     this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
-    this.context.drawImage(this.monkey,this.x, this.y, this.width, this.height);
+    this.context.fillRect(this.x,this.y,this.width,this.height);
 
-  if (!this.timeWhenLastUpdate) {
-    this.timeWhenLastUpdate = this.startTime;
+
+  if (!this.timeWhenLastUpdate) {  //initial picture that we render (starting point) //draw is called 16 ms
+    this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
   }
+  // console.log(this.startTime + '||' + this.timeWhenLastUpdate);
   this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+    // console.log(this.timeFromLastUpdate + '>' + this.timePerIdleFrame + '||' +(this.timeFromLastUpdate > this.timePerIdleFrame));
 
   if (this.timeFromLastUpdate > this.timePerIdleFrame) { //how long the image renders until we render the new one
-    this.monkey.src =
-      this.idleMonkeyPath + this.frameNumberIdle + ".png";
+    this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
     this.context.drawImage(this.monkey, this.x, this.y, this.width, this.height);
 
     this.timeWhenLastUpdate = this.startTime;
-    if (frameNumberIdle >= this.numberOfIdleImages) {
+    if (this.frameNumberIdle >= this.numberOfIdleImages) {
       this.frameNumberIdle = 0;
     } else {
       this.frameNumberIdle++;
