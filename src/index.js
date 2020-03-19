@@ -50,7 +50,7 @@ function loop() {
   levels.draw_platforms();
   player.draw();
 
-  if (keys[38] || keys[32]) {
+  if (keys[38] || keys[32]) { //player presses jump (spaceBar or up arrow)
     if (!player.jumping) {
       //add a jumping sound here, optional
       player.velY = -player.jumpStrength * 2;
@@ -58,16 +58,18 @@ function loop() {
     }
   }
 
-  if (keys[39]) {
+  if (keys[39]) {         //player moves right
     if (player.velX < player.speed) {
+      player.running = true;
       player.velX++;
     }
-  }
-
-  if (keys[37]) {
+  } else if (keys[37]) {       //player moves left
     if (player.velX > -player.speed) {
+      player.running = true;
       player.velX--;
     }
+  } else {
+    player.running = false;
   }
 
   player.x += player.velX;

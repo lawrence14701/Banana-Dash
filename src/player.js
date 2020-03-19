@@ -10,15 +10,22 @@ export default class Player {
     this.velY = 0;
     this.color = "#ff0000";
     this.jumpStrength = 7;
+
     this.jumping = false;
     this.grounded = false;
+    this.running = false
 
     this.monkey = new Image();
-
+    //idle
     this.idleMonkeyPath = "/src/img/idle/Idle_";
     this.durationIdle = 200;
     this.numberOfIdleImages = 17;
-    this.timePerIdleFrame = 32;//this.durationIdle / this.numberOfIdleImages;
+    this.timePerIdleFrame = this.durationIdle / this.numberOfIdleImages;
+    //running
+    this.RunningMonkeyPath = "/src/img/running/Running_";
+    this.durationRunning = 200;
+    this.numberOfRunningImages = 14;
+    this.timePerRunningFrame = this.durationRunning / this.numberOfRunningImages;
 
     this.timeWhenLastUpdate = null;
     this.timeFromLastUpdate = null;
@@ -28,9 +35,9 @@ export default class Player {
     this.started = false
     this.startTime = 0;
 
-     for (var i = 0; i < this.numberOfIdleImages; i++) {
-    document.body.append("<div id='preload-image-'"+i+"' style='background-image: url("+this.idleMonkeyPath+i +".png);'></div>");
-  }
+  //    for (var i = 0; i < this.numberOfIdleImages; i++) {
+  //   document.body.append("<div id='preload-image-'"+i+"' style='background-image: url("+this.idleMonkeyPath+i +".png);'></div>");
+  // }
 
     // const DURATION_JUMPING = 100;
     // const DURATION_RUNNING = 200;
@@ -45,39 +52,69 @@ export default class Player {
     // const TIME_PER_RUNNING_FRAME = DURATION_RUNNING / NUMBER_OF_RUNNING_IMAGES;
   }
   draw() {
-    // if(!this.started){
       this.startTime = performance.now();
-      // this.started = true;
-    // }
-    this.idle();
+      if(this.jumping) this.jumping();
+      else if(this.running) this.runningAnimation();
+      else this.idle();
   }
 
   idle() {
     this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
     this.context.fillRect(this.x,this.y,this.width,this.height);
+    // this.context.drawImage(this.monkey,this.x, this.y, this.width, this.height);
+    this.context.drawImage(this.monkey,0,0,60,60,this.x, this.y, this.width, this.height);
 
+    if (!this.timeWhenLastUpdate) {  //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    // console.log(this.startTime + '||' + this.timeWhenLastUpdate);
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+      // console.log(this.timeFromLastUpdate + '>' + this.timePerIdleFrame + '||' +(this.timeFromLastUpdate > this.timePerIdleFrame));
 
-  if (!this.timeWhenLastUpdate) {  //initial picture that we render (starting point) //draw is called 16 ms
-    this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
-  }
-  // console.log(this.startTime + '||' + this.timeWhenLastUpdate);
-  this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
-    // console.log(this.timeFromLastUpdate + '>' + this.timePerIdleFrame + '||' +(this.timeFromLastUpdate > this.timePerIdleFrame));
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) { //how long the image renders until we render the new one
+      this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
+      // this.context.drawImage(this.monkey, this.x, this.y, this.width, this.height);
 
-  if (this.timeFromLastUpdate > this.timePerIdleFrame) { //how long the image renders until we render the new one
-    this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
-    this.context.drawImage(this.monkey, this.x, this.y, this.width, this.height);
-
-    this.timeWhenLastUpdate = this.startTime;
-    if (this.frameNumberIdle >= this.numberOfIdleImages) {
-      this.frameNumberIdle = 0;
-    } else {
-      this.frameNumberIdle++;
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberIdle >= this.numberOfIdleImages) {
+        this.frameNumberIdle = 0;
+      } else {
+        this.frameNumberIdle++;
+      }
     }
   }
-  }
 
-  running() {}
+  runningAnimation() {
+    this.monkey.src = this.RunningMonkeyPath + this.frameNumberRunning + ".png";
+    this.context.fillRect(this.x, this.y, this.width, this.height);
+    this.context.drawImage(this.monkey, this.x, this.y, this.width, this.height);
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    // console.log(this.startTime + '||' + this.timeWhenLastUpdate);
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+    // console.log(this.timeFromLastUpdate + '>' + this.timePerIdleFrame + '||' +(this.timeFromLastUpdate > this.timePerIdleFrame));
+
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
+      //how long the image renders until we render the new one
+      this.monkey.src = this.RunningMonkeyPath + this.frameNumberRunning + ".png";
+      // this.context.drawImage(
+      //   this.monkey,
+      //   this.x,
+      //   this.y,
+      //   this.width,
+      //   this.height
+      // );
+
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberRunning >= this.numberOfRunningImages) {
+        this.frameNumberRunning = 0;
+      } else {
+        this.frameNumberRunning++;
+      }
+    }
+  }
 
   jumping() {}
 }
