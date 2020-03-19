@@ -10,7 +10,7 @@ class LevelMaker {
     this.tileSize = 50; // tile size, in pixels
     this.playerCol = 0; // player starting column
     this.playerRow = 0; // player starting column
-    this.levelsIndex = 0
+    this.levelsIndex = 0;
     this.levels = [
       [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
@@ -30,11 +30,11 @@ class LevelMaker {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] //15
       ],
       [
-        ([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
         ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //2
-        ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //3
+        ["L", 0, 0, 0, 0, 0, 'B', 0, 0, 0, 0, 0, 0, 0, 0, "R"], //3
         ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //4
-        ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "B", 0, 0, "R"], //5
+        ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //5
         ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "l", "_", "r", 0, "R"], //6
         ["L", 0, 0, "l", "_", "r", 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //7
         ["L", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //8
@@ -44,7 +44,7 @@ class LevelMaker {
         ["L", 0, 0, 0, 0, 0, 0, 0, "l", "_", "_", "_", "r", 0, 0, "R"], //12
         ["L", 0, 0, "l", "_", "r", 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //13
         ["L", "P", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "R"], //14
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) //15
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] //15
       ]
     ];
     // 1, 2, 3, 4, 5, 6, 7, 8, 9 ,10,11,12,13,14,15,16
@@ -55,31 +55,30 @@ class LevelMaker {
   }
 
   draw(x, y, width, height, url) {
-   let image = new Image();
-   image.src = "/src/img/" + url;
-//    image.onload = function() {
-     this.context.drawImage(image, x, y, width, height);
-//    };
+    let image = new Image();
+    image.src = "/src/img/" + url;
+    this.context.drawImage(image, x, y, width, height);
   }
 
   draw_platforms() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillStyle = "#333333";
-    const level = this.levels[this.levelsIndex]; //single level
+    let level = this.levels[this.levelsIndex]; //single level
+  
 
     for (let i = 0; i < this.levelRows; i++) {
       for (let j = 0; j < this.levelCols; j++) {
         let x = j * this.tileSize;
         let y = i * this.tileSize;
-
-        if (level[i][j] === 1) { 
+        if (this.levelsIndex === 1) {
+        }
+        if (level[i][j] === 1) {
           this.platforms.tiles.push({
             x: x,
             y: y,
             width: this.tileSize,
             height: this.tileSize
           });
-          this.draw(x, y, this.tileSize, this.tileSize,'tiles/grass.png');
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/grass.png");
         }
         if (level[i][j] === "w") {
           this.platforms.tiles.push({
@@ -97,44 +96,56 @@ class LevelMaker {
             width: this.tileSize,
             height: this.tileSize
           });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform_edge_left.png");
+          this.draw(
+            x,
+            y,
+            this.tileSize,
+            this.tileSize,
+            "tiles/platform_edge_left.png"
+          );
         }
-         if (level[i][j] === '_') {
-           this.platforms.tiles.push({
-             x: x,
-             y: y,
-             width: this.tileSize,
-             height: this.tileSize
-           });
-           this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform.png");
+        if (level[i][j] === "_") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform.png");
         }
-          if (level[i][j] === "r") {
-            this.platforms.tiles.push({
-              x: x,
-              y: y,
-              width: this.tileSize,
-              height: this.tileSize
-            });
-            this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform_edge_right.png");
-          }
-         if (level[i][j] === 'R') {
-           this.platforms.tiles.push({
-             x: x,
-             y: y,
-             width: this.tileSize,
-             height: this.tileSize
-           });
-           this.draw(x, y, this.tileSize, this.tileSize, "tiles/right.png");
-         }
-            if (level[i][j] === "L") {
-              this.platforms.tiles.push({
-                x: x,
-                y: y,
-                width: this.tileSize,
-                height: this.tileSize
-              });
-              this.draw(x, y, this.tileSize, this.tileSize, "tiles/left.png");
-            }
+        if (level[i][j] === "r") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(
+            x,
+            y,
+            this.tileSize,
+            this.tileSize,
+            "tiles/platform_edge_right.png"
+          );
+        }
+        if (level[i][j] === "R") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/right.png");
+        }
+        if (level[i][j] === "L") {
+          this.platforms.tiles.push({
+            x: x,
+            y: y,
+            width: this.tileSize,
+            height: this.tileSize
+          });
+          this.draw(x, y, this.tileSize, this.tileSize, "tiles/left.png");
+        }
         if (level[i][j] === "B") {
           this.platforms.bananas.push({
             x: x,
@@ -142,14 +153,20 @@ class LevelMaker {
             width: this.tileSize,
             height: this.tileSize
           });
-          this.draw(x, y, this.tileSize, this.tileSize,'collectable/banana.png');
+          this.draw(
+            x,
+            y,
+            this.tileSize,
+            this.tileSize,
+            "collectable/banana.png"
+          );
         }
       }
     }
   }
 
   start() {
-    const level = this.levels[this.levelsIndex] //single level
+    const level = this.levels[this.levelsIndex]; //single level
 
     for (let i = 0; i < this.levelRows; i++) {
       for (let j = 0; j < this.levelCols; j++) {
@@ -162,6 +179,14 @@ class LevelMaker {
     var playerXPos = this.playerCol * this.tileSize; // converting X player position from tiles to pixels
     var playerYPos = this.playerRow * this.tileSize; // converting Y player position from tiles to pixels
     return [playerXPos, playerYPos];
+  }
+
+  nextLevel() {
+    this.platforms = {
+      tiles: [],
+      bananas: []
+    };
+    this.levelsIndex += 1;
   }
 }
 

@@ -20,8 +20,8 @@ var keys = [];
 var friction = 0.8;
 var gravity = 0.98;
 var completed = false;
-let startX = levels.start()[0];
-let startY = levels.start()[1];
+let startX = levels.start()[0]; //player start x position for first level
+let startY = levels.start()[1]; //player start y position for first level
 const player = new Player(startX, startY, 60, 60, context);
 
 function startGame() {
@@ -95,7 +95,14 @@ function loop() {
 
   let goal = levels.platforms.bananas[0];
   if (collisionCheck(player, goal)) {
-    complete();
+    if(levels.levelsIndex < levels.levels.length){
+      clearCanvas()
+      levels.nextLevel()
+      player.x = levels.start()[0]; //change player x position to fit the level
+      player.y = levels.start()[1]; //change player y position to fit the level
+    } else {
+      complete();
+    }
   }
   if (!completed) {
     requestAnimationFrame(loop);
@@ -103,7 +110,6 @@ function loop() {
 }
 
 function complete() {
-  if (levels.levelsIndex === levels.levels.length) {
     clearCanvas();
     soundFlag = false;
     completed = true;
@@ -122,22 +128,9 @@ function complete() {
       canvas.width / 2,
       canvas.height / 2
     );
-  } else {
-    levels.nextLevel()
-    requestAnimationFrame(loop);
-  }
 }
 
-function reset() {
-  player.x = 100;
-  player.y = 100;
-  player.grounded = true;
-  player.velY = 0;
-  player.velX = 0;
-  completed = false;
 
-  requestAnimationFrame(loop);
-}
 
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
