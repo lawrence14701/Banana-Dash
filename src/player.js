@@ -49,9 +49,8 @@ export default class Player {
   }
 
   idle() {
-    this.monkey.src =
-    this.idleMonkeyPath + this.frameNumberIdle + ".png";
-    this.context.drawImage(this.monkey, this.x, this.y, this.width, this.height);
+    this.monkey.src = this.idleMonkeyPath + this.frameNumberIdle + ".png";
+    this.context.drawImage(this.monkey,this.x, this.y, this.width, this.height);
 
   if (!this.timeWhenLastUpdate) {
     this.timeWhenLastUpdate = this.startTime;

@@ -12,6 +12,7 @@ canvas.height = levels.tileSize * levels.levelRows; //same as before
 
 //sound
 var sound = document.getElementById("background-music");
+var jumpSound = document.getElementById("jump");
 
 var soundFlag = false;
 var gameStarted = false;
@@ -28,28 +29,29 @@ function startGame() {
   soundFlag = true;
   if (soundFlag === true) {
     //restart the background music when it hits the end
-    sound.addEventListener("ended", function() {
+    sound.addEventListener(
+      "ended",
+      function() {
         this.currentTime = 0;
         this.play();
       },
       false
-      );
+    );
     sound.play();
   }
   clearCanvas();
   requestAnimationFrame(loop);
 }
 
-
 function loop() {
   clearCanvas();
-
 
   levels.draw_platforms();
   player.draw();
 
   if (keys[38] || keys[32]) {
     if (!player.jumping) {
+      //add a jumping sound here, optional
       player.velY = -player.jumpStrength * 2;
       player.jumping = true;
     }
@@ -101,25 +103,29 @@ function loop() {
 }
 
 function complete() {
-  clearCanvas();
-  soundFlag = false
-  completed = true;
+  if (levels.levelsIndex === levels.levels.length) {
+    clearCanvas();
+    soundFlag = false;
+    completed = true;
+    context.font = "50 px Impact";
+    context.fillStyle = "orange";
+    context.textAlign = "center";
+    context.fillText(
+      "You Won! Press enter to start again",
+      canvas.width / 2,
+      canvas.height / 2 + 50
+    );
 
-  context.font = "50 px Impact";
-  context.fillStyle = "orange";
-  context.textAlign = "center";
-  context.fillText(
-    "You Won! Press enter to start again",
-    canvas.width / 2,
-    canvas.height / 2 + 50
-  );
-
-  context.font = "20px Arial";
-  context.fillText(
-    "Press enter to play again",
-    canvas.width / 2,
-    canvas.height / 2
-  );
+    context.font = "20px Arial";
+    context.fillText(
+      "Press enter to play again",
+      canvas.width / 2,
+      canvas.height / 2
+    );
+  } else {
+    levels.nextLevel()
+    requestAnimationFrame(loop);
+  }
 }
 
 function reset() {
@@ -233,7 +239,7 @@ intro_screen(canvas, context);
 //       timeWhenLastUpdate = startTime;
 //     }
 //     timeFromLastUpdate = startTime - timeWhenLastUpdate;
-   
+
 //     if (timeFromLastUpdate > TIME_PER_IDLE_FRAME) {
 //     monkey.image.src = IDLE_MONKEY_PATH + "/idle_" + frameNumberIdle + ".png";
 //     context.drawImage(
