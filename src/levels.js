@@ -59,7 +59,7 @@ class LevelMaker {
     debugger
     this.context.drawImage(image, x, y, width, height);
   }
-  drawSides(x,y){
+  drawSides(x,y){ //invisible boundaries to map
      this.platforms.tiles.push({
        x: x,
        y: y,

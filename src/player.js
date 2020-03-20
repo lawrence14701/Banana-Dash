@@ -11,6 +11,8 @@ export default class Player {
     this.color = "#ff0000";
     this.jumpStrength = 7;
 
+    this.idleRight = true
+    this.idleLeft = false
     this.jumping = false;
     this.grounded = false;
     this.runningRight = false;
@@ -46,10 +48,73 @@ export default class Player {
     if (this.jumping) this.jumpingAnimation();
     else if (this.runningRight) this.runningRightAnimation();
     else if (this.runningLeft) this.runningLeftAnimation();
-    else this.idleAnimation();
+    else if (this.idleLeft) this.idleLeftAnimation();
+    else this.idleRightAnimation()
   }
 
-  idleAnimation() {
+  idleRightAnimation() {
+    
+    this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
+    this.context.drawImage(
+      this.monkey,
+      60, 100,
+      510,475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberIdle < this.numberOfIdleImages - 1) {
+        this.frameNumberIdle++;
+      } else {
+        this.frameNumberIdle = 0;
+      }
+    }
+  }
+
+  idleLeftAnimation(){
+    this.monkey = document.getElementById("idle_left_" + this.frameNumberIdle);
+    this.context.drawImage(
+      this.monkey,
+      60,
+      100,
+      510,
+      475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberIdle < this.numberOfIdleImages - 1) {
+        this.frameNumberIdle++;
+      } else {
+        this.frameNumberIdle = 0;
+      }
+    }
+  }
+  idleRightAnimation() {
     
     this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
     this.context.drawImage(
