@@ -15,9 +15,9 @@ class LevelMaker {
       [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //1
         [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //2
-        [7, 0, 0, 0, 0, 4, 3, 5, 0, 0, 0, 0, 0, 'B', 0, 6], //3
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //4
-        [7, 0, 0, 4, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //5
+        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //3
+        [7, 'B', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //4
+        [7, 4, 3, 3, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //5
         [7, 0, 0, 0, 0, 0, 4, 3, 5, 0, 0, 0, 0, 0, 0, 6], //6
         [7, 0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 5, 0, 0, 0, 6], //7
         [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 6], //8
@@ -60,6 +60,17 @@ class LevelMaker {
     this.context.drawImage(image, x, y, width, height);
   }
 
+
+  pushAndDraw(x,y,url){
+    this.platforms.tiles.push({
+      x: x,
+      y: y,
+      width: this.tileSize,
+      height: this.tileSize
+    });
+    this.draw(x, y, this.tileSize, this.tileSize, url);
+  }
+
   draw_platforms() {
     //p = player
     //b = banana
@@ -79,85 +90,16 @@ class LevelMaker {
       for (let j = 0; j < this.levelCols; j++) {
         let x = j * this.tileSize;
         let y = i * this.tileSize;
-        if (this.levelsIndex === 1) {
-        }
-        if (level[i][j] === 1) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/grass.png");
-        }
-        if (level[i][j] === 2) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/wooden_box.png");
-        }
-        if (level[i][j] === 4) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(
-            x,
-            y,
-            this.tileSize,
-            this.tileSize,
-            "tiles/platform_edge_left.png"
-          );
-        }
-        if (level[i][j] === 3) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/platform.png");
-        }
-        if (level[i][j] === 5) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(
-            x,
-            y,
-            this.tileSize,
-            this.tileSize,
-            "tiles/platform_edge_right.png"
-          );
-        }
-        if (level[i][j] === 6) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/right.png");
-        }
-        if (level[i][j] === 7) {
-          this.platforms.tiles.push({
-            x: x,
-            y: y,
-            width: this.tileSize,
-            height: this.tileSize
-          });
-          this.draw(x, y, this.tileSize, this.tileSize, "tiles/left.png");
-        }
+        //platforms
+        if (level[i][j] === 1) this.pushAndDraw(x,y,'tiles/grass.png')
+        if (level[i][j] === 2) this.pushAndDraw(x,y,'tiles/wooden_box.png') 
+        if (level[i][j] === 4) this.pushAndDraw(x,y,'tiles/platform_edge_left.png')
+        if (level[i][j] === 3) this.pushAndDraw(x,y,'tiles/platform.png')
+        if (level[i][j] === 5) this.pushAndDraw(x,y,'tiles/platform_edge_right.png')
+        if (level[i][j] === 6) this.pushAndDraw(x,y,'tiles/right.png')
+        if (level[i][j] === 7) this.pushAndDraw(x,y,'tiles/left.png')
         if (level[i][j] === "B") {
-          this.platforms.bananas.push({
+          this.platforms.bananas.push({ //this is pushing to bananas array
             x: x,
             y: y,
             width: this.tileSize,
