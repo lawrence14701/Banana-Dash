@@ -50,7 +50,8 @@ function loop() {
   levels.draw_platforms();
   player.draw();
 
-  if (keys[38] || keys[32]) { //player presses jump (spaceBar or up arrow)
+  if (keys[38] || keys[32]) {
+    //player presses jump (spaceBar or up arrow)
     if (!player.jumping) {
       //add a jumping sound here, optional
       player.velY = -player.jumpStrength * 2;
@@ -58,12 +59,14 @@ function loop() {
     }
   }
 
-  if (keys[39]) {         //player moves right
+  if (keys[39]) {
+    //player moves right
     if (player.velX < player.speed) {
       player.running = true;
       player.velX++;
     }
-  } else if (keys[37]) {       //player moves left
+  } else if (keys[37]) {
+    //player moves left
     if (player.velX > -player.speed) {
       player.running = true;
       player.velX--;
@@ -98,43 +101,40 @@ function loop() {
 
   let goal = levels.platforms.bananas[0];
   if (collisionCheck(player, goal)) {
-    if(levels.levelsIndex < levels.levels.length){
-      clearCanvas()
-      levels.nextLevel()
-      player.x = levels.start()[0]; //change player x position to fit the level
-      player.y = levels.start()[1]; //change player y position to fit the level
-    } else {
+    if (levels.levelsIndex === levels.levels.length) {
       complete();
+    } else {
+      clearCanvas();
+      levels.nextLevel();
+      player.x = levels.start()[0]; //change player x position to fit the level
+      player.y = levels.start()[1]; //change player y position to fit the level    }
     }
   }
   if (!completed) {
     requestAnimationFrame(loop);
-    // loop();
   }
 }
 
 function complete() {
-    clearCanvas();
-    soundFlag = false;
-    completed = true;
-    context.font = "50 px Impact";
-    context.fillStyle = "orange";
-    context.textAlign = "center";
-    context.fillText(
-      "You Won! Press enter to start again",
-      canvas.width / 2,
-      canvas.height / 2 + 50
-    );
+  clearCanvas();
+  soundFlag = false;
+  completed = true;
+  context.font = "50 px Impact";
+  context.fillStyle = "orange";
+  context.textAlign = "center";
+  context.fillText(
+    "You Won! Press enter to start again",
+    canvas.width / 2,
+    canvas.height / 2 + 50
+  );
 
-    context.font = "20px Arial";
-    context.fillText(
-      "Press enter to play again",
-      canvas.width / 2,
-      canvas.height / 2
-    );
+  context.font = "20px Arial";
+  context.fillText(
+    "Press enter to play again",
+    canvas.width / 2,
+    canvas.height / 2
+  );
 }
-
-
 
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -163,9 +163,9 @@ intro_screen(canvas, context);
 //     document.body.append("<div id='preload-image-'"+NUMBER_OF_IDLE_IMAGES+"' style='background-image: url("+NUMBER_OF_IDLE_IMAGES+");'></div>");
 //   }
 
-  // for (var i = 1; i < NUMBER_OF_R_IMAGES + 1; i++) {
-  //   document.body.append("<div id='preload-image-'"+NUMBER_OF_RUNNING_IMAGES+"' style='background-image: url("+NUMBER_OF_RUNNING_IMAGES+");'></div>");
-  // }
+// for (var i = 1; i < NUMBER_OF_R_IMAGES + 1; i++) {
+//   document.body.append("<div id='preload-image-'"+NUMBER_OF_RUNNING_IMAGES+"' style='background-image: url("+NUMBER_OF_RUNNING_IMAGES+");'></div>");
+// }
 
 // const DURATION_IDLE = 200;
 // const DURATION_JUMPING = 100;

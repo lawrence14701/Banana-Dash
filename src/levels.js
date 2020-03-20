@@ -61,6 +61,7 @@ class LevelMaker {
   }
 
   draw_platforms() {
+    if (this.levelsIndex === this.levels.length) return //don't run code if the levels are finished
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let level = this.levels[this.levelsIndex]; //single level
   
@@ -166,6 +167,7 @@ class LevelMaker {
   }
 
   start() {
+    if (this.levelsIndex === this.levels.length) return; //dont run code if levels are finished
     const level = this.levels[this.levelsIndex]; //single level
 
     for (let i = 0; i < this.levelRows; i++) {
