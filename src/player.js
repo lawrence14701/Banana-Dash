@@ -13,7 +13,8 @@ export default class Player {
 
     this.jumping = false;
     this.grounded = false;
-    this.running = false;
+    this.runningRight = false;
+    this.runningLeft = false;
 
     this.monkey; // = new Image();
     //idle
@@ -43,7 +44,8 @@ export default class Player {
   draw() {
     this.startTime = performance.now();
     if (this.jumping) this.jumpingAnimation();
-    else if (this.running) this.runningAnimation();
+    else if (this.runningRight) this.runningRightAnimation();
+    else if (this.runningLeft) this.runningLeftAnimation();
     else this.idleAnimation();
   }
 
@@ -74,9 +76,38 @@ export default class Player {
       }
     }
   }
+  runningLeftAnimation(){
+    this.monkey = document.getElementById(
+      "running_left_" + this.frameNumberRunning
+    );
+    this.context.drawImage(
+      this.monkey,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
 
-  runningAnimation() {
-    this.monkey = document.getElementById("running_" + this.frameNumberRunning);
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point)
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+
+    if (this.timeFromLastUpdate > this.timePerRunningFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById("idle_" + this.frameNumberRunning);
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberRunning < this.numberOfRunningImages - 1) {
+        this.frameNumberRunning++;
+      } else {
+        this.frameNumberRunning = 0;
+      }
+    }
+  }
+
+  runningRightAnimation() {
+    this.monkey = document.getElementById("running_right_" + this.frameNumberRunning);
     this.context.drawImage(
       this.monkey,
       this.x,

@@ -62,17 +62,18 @@ function loop() {
   if (keys[39]) {
     //player moves right
     if (player.velX < player.speed) {
-      player.running = true;
+      player.runningRight = true;
       player.velX++;
     }
   } else if (keys[37]) {
     //player moves left
     if (player.velX > -player.speed) {
-      player.running = true;
+      player.runningLeft = true;
       player.velX--;
     }
   } else {
-    player.running = false;
+    player.runningRight = false;
+    player.runningLeft = false;
   }
 
   player.x += player.velX;
