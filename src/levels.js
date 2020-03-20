@@ -14,19 +14,19 @@ class LevelMaker {
     this.levels = [
       [
         [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8], //1
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //2
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //3
-        [7, 'B', 11, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //4
-        [7, 4, 3, 3, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6], //5
-        [7, 0, 0, 0, 0, 0, 4, 3, 5, 0, 0, 0, 0, 0, 0, 6], //6
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 5, 0, 0, 0, 6], //7
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 6], //8
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 5, 0, 6], //9
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 6], //10
-        [7, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 6], //11
-        [7, 0, 0, 0, 0, 9, 0, 2, 2, 2, 2, 0, 0, 0, 0, 6], //12
-        [7, 0, 0, 4, 3, 3, 3, 3, 3, 3, 3, 5, 0, 0, 0, 6], //13
-        [7, "P", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 6], //14
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8], //2
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8], //3
+        [8, 'B', 11, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8], //4
+        [8, 4, 3, 3, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8], //5
+        [8, 0, 0, 0, 0, 0, 4, 3, 3, 3, 3, 5, 0, 0, 0, 8], //8
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8], //8
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 8], //8
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 5, 0, 8], //9
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 8], //10
+        [8, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 8], //11
+        [8, 0, 0, 0, 0, 9, 0, 2, 2, 2, 2, 0, 0, 0, 0, 8], //12
+        [8, 0, 0, 4, 3, 3, 3, 3, 3, 3, 3, 5, 0, 0, 0, 8], //13
+        [8, "P", 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 8], //14
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] //15
       ],
       [
@@ -59,6 +59,16 @@ class LevelMaker {
     debugger
     this.context.drawImage(image, x, y, width, height);
   }
+  drawSides(x,y){
+     this.platforms.tiles.push({
+       x: x,
+       y: y,
+       width: 1,
+       height: 3
+     });
+    this.context.fillStyle = "rgba(225,225,225,0.5)";
+    this.context.fillRect(x, y, this.width, this.height);
+  }
 
 
   pushAndDraw(x,y,url){
@@ -72,15 +82,7 @@ class LevelMaker {
   }
 
   draw_platforms() {
-    //p = player
-    //b = banana
-    //1 = grass
-    //2 = wooden box
-    //3 = middle platform
-    //4 = left platform
-    //5 = right platform
-    //6 = right edge
-    //7 = left edge
+  
     if (this.levelsIndex === this.levels.length) return //don't run code if the levels are finished
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     let level = this.levels[this.levelsIndex]; //single level
@@ -97,11 +99,7 @@ class LevelMaker {
         if (position === 4) this.pushAndDraw(x,y,'platformEdgeLeft')
         if (position === 3) this.pushAndDraw(x,y,'platform')
         if (position === 5) this.pushAndDraw(x,y,'platformEdgeRight')
-        if (position === 6) this.pushAndDraw(x,y,'right')
-        if (position === 7) this.pushAndDraw(x,y,'left')
-        if (position === 8) this.pushAndDraw(x, y, "dirt");
-
-        
+        if (position === 8) this.drawSides(x, y);
 
         //environment
         if(position === 9) this.draw(x,y,50,60,'bush')
