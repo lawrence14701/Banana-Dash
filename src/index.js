@@ -19,7 +19,6 @@ var gameStarted = false;
 var keys = [];
 var friction = 0.8;
 var gravity = 0.98;
-var completed = false;
 let startX = levels.start()[0]; //player start x position for first level
 let startY = levels.start()[1]; //player start y position for first level
 const player = new Player(startX, startY, 60, 60, context);
@@ -128,7 +127,6 @@ function reset() {
   player.grounded = true;
   player.velY = 0;
   player.velX = 0;
-  completed = false;
 
   requestAnimationFrame(loop);
 }
@@ -136,7 +134,6 @@ function reset() {
 function complete() {
   clearCanvas();
   soundFlag = false;
-  completed = true;
   context.font = "50 px Impact";
   context.fillStyle = "orange";
   context.textAlign = "center";
@@ -167,7 +164,7 @@ document.body.addEventListener("keydown", function(event) {
   if (event.keyCode == 13 && !gameStarted) {
     startGame();
   }
-  if (event.keyCode == 13 && completed) {
+  if (event.keyCode == 13 && levels.done) {
     reset();
   }
   keys[event.keyCode] = true;
