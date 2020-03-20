@@ -50,9 +50,13 @@ export default class Player {
   }
 
   idleAnimation() {
+    this.context.fillRect(this.x,this.y,this.width,this.height);
+    
     this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
     this.context.drawImage(
       this.monkey,
+      60, 100,
+      510,475,
       this.x,
       this.y,
       this.width,
@@ -80,13 +84,17 @@ export default class Player {
     this.monkey = document.getElementById(
       "running_left_" + this.frameNumberRunning
     );
-    this.context.drawImage(
-      this.monkey,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
+     this.context.drawImage(
+       this.monkey,
+       60,
+       100,
+       510,
+       475,
+       this.x,
+       this.y,
+       this.width,
+       this.height
+     );
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point)
@@ -108,13 +116,17 @@ export default class Player {
 
   runningRightAnimation() {
     this.monkey = document.getElementById("running_right_" + this.frameNumberRunning);
-    this.context.drawImage(
-      this.monkey,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
+     this.context.drawImage(
+       this.monkey,
+       60,
+       100,
+       510,
+       475,
+       this.x,
+       this.y,
+       this.width,
+       this.height
+     );
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point)
@@ -138,6 +150,10 @@ export default class Player {
         this.monkey = document.getElementById("jumping_" + this.frameNumberJumping);
         this.context.drawImage(
           this.monkey,
+          60,
+          100,
+          510,
+          475,
           this.x,
           this.y,
           this.width,
