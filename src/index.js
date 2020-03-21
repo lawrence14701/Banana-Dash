@@ -1,4 +1,4 @@
-import { intro_screen } from "./intro";
+import { intro_screen } from "./canvas_slides";
 import { collisionCheck } from "./collisionCheck";
 import LevelMaker from "./levels";
 import Player from "./player";
@@ -14,7 +14,6 @@ var sound = document.getElementById("background-music");
 var bananaSound = document.getElementById('collect-banana-sound')
 var jumpSound = document.getElementById("jump");
 
-var gameStarted = false;
 var keys = [];
 var friction = 0.8;
 var gravity = 0.98;
@@ -23,7 +22,6 @@ let startY = levels.start()[1]; //player start y position for first level
 const player = new Player(startX, startY, 60, 60, context);
 
 function startGame() {
-  gameStarted = true;
     //restart the background music when it hits the end
     sound.addEventListener(
       "ended",
@@ -140,6 +138,7 @@ function reset() {
   requestAnimationFrame(loop);
 }
 
+
 function complete() {
   clearCanvas();
   sound.pause();
@@ -170,7 +169,7 @@ function clearCanvas() {
 intro_screen(canvas, context);
 
 document.body.addEventListener("keydown", function(event) {
-  if (event.keyCode == 13 && !gameStarted) {
+  if (event.keyCode == 13 && !levels.done) {
     startGame();
   }
   if (event.keyCode == 13 && levels.done) {
