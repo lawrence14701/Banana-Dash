@@ -87,6 +87,7 @@ export default class Player {
   }
 
   idleLeftAnimation() {
+    this.context.fillRect(this.x,this.y,this.width,this.height)
     this.monkey = document.getElementById("idle_left_" + this.frameNumberIdle);
     this.context.drawImage(
       this.monkey,
