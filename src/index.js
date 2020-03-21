@@ -11,6 +11,7 @@ canvas.height = levels.tileSize * levels.levelRows; //same as before
 
 //sound
 var sound = document.getElementById("background-music");
+var bananaSound = document.getElementById('collect-banana-sound')
 var jumpSound = document.getElementById("jump");
 
 var gameStarted = false;
@@ -100,6 +101,8 @@ function loop() {
 
   let goal = levels.platforms.bananas[0];
   if (collisionCheck(player, goal)) {
+      bananaSound.play();
+      bananaSound.currentTime = 0; //reset banana sound
       clearCanvas();
       levels.nextLevel();
       if(!levels.done){
@@ -115,6 +118,15 @@ function loop() {
 }
 
 function reset() {
+  sound.addEventListener(
+    "ended",
+    function() {
+      this.currentTime = 0;
+      this.play();
+    },
+    false
+  );
+  sound.play();
   levels.levelsIndex = 0
   levels.done = false
   player.x = startX;

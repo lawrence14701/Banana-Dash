@@ -19,7 +19,7 @@
       }
       
       #canvas-container {
-        padding-top: 5rem;
+        padding-top: 2rem;
         /* padding-bottom: 5rem; */
       }
       .tiles {
@@ -28,7 +28,7 @@
       .animations {
         display: none;
       }
-      .logo{
+      #logo{
         display: none;
       }
       body {
@@ -49,8 +49,10 @@
       <canvas id="game" width="800" height="700"></canvas>
     </div>
     <audio src="./src/sounds/background.mp3" id="background-music"></audio>
+    <audio src="./src/sounds/collect_banana.wav" id="collect-banana-sound"></audio>
+
     
-    <img src="./src/img/banana_dash_logo.png" alt="" class="logo">
+    <img id= 'logo' src="./src/img/banana_dash_logo.png" alt="">
 
     <div class="animations">
 
