@@ -1,4 +1,3 @@
-import "./styles/index.scss";
 import { intro_screen } from "./intro";
 import { collisionCheck } from "./collisionCheck";
 import LevelMaker from "./levels";
@@ -14,7 +13,6 @@ canvas.height = levels.tileSize * levels.levelRows; //same as before
 var sound = document.getElementById("background-music");
 var jumpSound = document.getElementById("jump");
 
-var soundFlag = false;
 var gameStarted = false;
 var keys = [];
 var friction = 0.8;
@@ -25,8 +23,6 @@ const player = new Player(startX, startY, 60, 60, context);
 
 function startGame() {
   gameStarted = true;
-  soundFlag = true;
-  if (soundFlag === true) {
     //restart the background music when it hits the end
     sound.addEventListener(
       "ended",
@@ -37,10 +33,9 @@ function startGame() {
       false
     );
     sound.play();
-  }
+  
   clearCanvas();
   requestAnimationFrame(loop);
-  // loop();
 }
 
 function loop() {
@@ -133,7 +128,7 @@ function reset() {
 
 function complete() {
   clearCanvas();
-  soundFlag = false;
+  sound.pause();
   context.font = "50 px Impact";
   context.fillStyle = "orange";
   context.textAlign = "center";

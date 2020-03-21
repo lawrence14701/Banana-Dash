@@ -12,10 +12,16 @@
         background-size: cover;
         background-repeat: no-repeat, no-repeat;
         background-position: center, center;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
       }
+      
       #canvas-container {
-        display: flex;
-        align-items: center;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
       }
       .tiles {
         display: none;
@@ -23,9 +29,16 @@
       .animations {
         display: none;
       }
+      .logo{
+        display: none;
+      }
       body {
         margin: 0;
         height: 100%;
+        background-image: url(/src/img/background.jpeg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
       }
       html {
         height: 100%;
@@ -37,6 +50,8 @@
       <canvas id="game" width="800" height="700"></canvas>
     </div>
     <audio src="./src/sounds/background.mp3" id="background-music"></audio>
+    
+    <img src="./src/img/banana_dash_logo.png" alt="" class="logo">
 
     <div class="animations">
 
