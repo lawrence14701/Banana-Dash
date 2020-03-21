@@ -47,10 +47,11 @@ function loop() {
 
   if (keys[38] || keys[32]) {
     //player presses jump (spaceBar or up arrow)
-    if (!player.jumping) {
+    if (!player.jumpingRight && !player.jumpingLeft) {
       //add a jumping sound here, optional
+      if(player.idleLeft) player.jumpingLeft = true
+      if(player.idleRight) player.jumpingRight = true
       player.velY = -player.jumpStrength * 2;
-      player.jumping = true;
     }
   }
 
@@ -88,7 +89,8 @@ function loop() {
     if (direction == "left" || direction == "right") {
       player.velX = 0;
     } else if (direction == "bottom") {
-      player.jumping = false;
+      player.jumpingRight = false;
+      player.jumpingLeft = false;
       player.grounded = true;
     } else if (direction == "top") {
       player.velY *= -0.01;

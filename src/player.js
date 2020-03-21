@@ -11,9 +11,10 @@ export default class Player {
     this.color = "#ff0000";
     this.jumpStrength = 7;
 
-    this.idleRight = true
-    this.idleLeft = false
-    this.jumping = false;
+    this.idleRight = true;
+    this.idleLeft = false;
+    this.jumpingRight = false;
+    this.jumpingLeft = false;
     this.grounded = false;
     this.runningRight = false;
     this.runningLeft = false;
@@ -28,13 +29,13 @@ export default class Player {
     this.durationRunning = 200;
     this.numberOfRunningImages = 14;
     this.timePerRunningFrame =
-    this.durationRunning / this.numberOfRunningImages;
+      this.durationRunning / this.numberOfRunningImages;
     this.frameNumberRunning = 0;
     //jumping
     this.durationJumping = 200;
     this.numberOfJumpingImages = 5;
     this.timePerJumpingFrame =
-    this.durationJumping / this.numberOfJumpingImages;
+      this.durationJumping / this.numberOfJumpingImages;
     this.frameNumberJumping = 0;
 
     //animation variables
@@ -45,20 +46,22 @@ export default class Player {
   }
   draw() {
     this.startTime = performance.now();
-    if (this.jumping) this.jumpingAnimation();
+    if (this.jumpingRight) this.jumpingRightAnimation();
+    else if (this.jumpingLeft) this.jumpingLeftAnimation();
     else if (this.runningRight) this.runningRightAnimation();
     else if (this.runningLeft) this.runningLeftAnimation();
     else if (this.idleLeft) this.idleLeftAnimation();
-    else this.idleRightAnimation()
+    else this.idleRightAnimation();
   }
 
   idleRightAnimation() {
-    
     this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
     this.context.drawImage(
       this.monkey,
-      60, 100,
-      510,475,
+      60,
+      100,
+      510,
+      475,
       this.x,
       this.y,
       this.width,
@@ -83,7 +86,7 @@ export default class Player {
     }
   }
 
-  idleLeftAnimation(){
+  idleLeftAnimation() {
     this.monkey = document.getElementById("idle_left_" + this.frameNumberIdle);
     this.context.drawImage(
       this.monkey,
@@ -115,12 +118,13 @@ export default class Player {
     }
   }
   idleRightAnimation() {
-    
     this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
     this.context.drawImage(
       this.monkey,
-      60, 100,
-      510,475,
+      60,
+      100,
+      510,
+      475,
       this.x,
       this.y,
       this.width,
@@ -144,21 +148,21 @@ export default class Player {
       }
     }
   }
-  runningLeftAnimation(){
+  runningLeftAnimation() {
     this.monkey = document.getElementById(
       "running_left_" + this.frameNumberRunning
     );
-     this.context.drawImage(
-       this.monkey,
-       60,
-       100,
-       510,
-       475,
-       this.x,
-       this.y,
-       this.width,
-       this.height
-     );
+    this.context.drawImage(
+      this.monkey,
+      60,
+      100,
+      510,
+      475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point)
@@ -179,18 +183,20 @@ export default class Player {
   }
 
   runningRightAnimation() {
-    this.monkey = document.getElementById("running_right_" + this.frameNumberRunning);
-     this.context.drawImage(
-       this.monkey,
-       60,
-       100,
-       510,
-       475,
-       this.x,
-       this.y,
-       this.width,
-       this.height
-     );
+    this.monkey = document.getElementById(
+      "running_right_" + this.frameNumberRunning
+    );
+    this.context.drawImage(
+      this.monkey,
+      60,
+      100,
+      510,
+      475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point)
@@ -210,35 +216,74 @@ export default class Player {
     }
   }
 
-  jumpingAnimation() {
-        this.monkey = document.getElementById("jumping_" + this.frameNumberJumping);
-        this.context.drawImage(
-          this.monkey,
-          60,
-          100,
-          510,
-          475,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
+  jumpingRightAnimation() {
+    this.monkey = document.getElementById("jumping_" + this.frameNumberJumping);
+    this.context.drawImage(
+      this.monkey,
+      60,
+      100,
+      510,
+      475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
 
-        if (!this.timeWhenLastUpdate) {
-          //initial picture that we render (starting point) //draw is called 16 ms
-          this.timeWhenLastUpdate = this.startTime - this.timePerJumpingFrame;
-        }
-        this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerJumpingFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
 
-        if (this.timeFromLastUpdate > this.timePerJumpingFrame) {
-          //how long the image renders until we render the new one
-          this.monkey = document.getElementById("jumping_" + this.frameNumberJumping);
-          this.timeWhenLastUpdate = this.startTime;
-          if (this.frameNumberJumping < this.numberOfJumpingImages - 1) { //we minus one bec we have to account for the 0th index
-            this.frameNumberJumping++;
-          } else {
-            this.frameNumberJumping = 0;
-          }
-        }
+    if (this.timeFromLastUpdate > this.timePerJumpingFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById(
+        "jumping_" + this.frameNumberJumping
+      );
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberJumping < this.numberOfJumpingImages - 1) {
+        //we minus one bec we have to account for the 0th index
+        this.frameNumberJumping++;
+      } else {
+        this.frameNumberJumping = 0;
+      }
+    }
+  }
+  jumpingLeftAnimation() {
+    this.monkey = document.getElementById(
+      "jumping_left_" + this.frameNumberJumping
+    );
+    this.context.drawImage(
+      this.monkey,
+      60,
+      100,
+      510,
+      475,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+
+    if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerJumpingFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+
+    if (this.timeFromLastUpdate > this.timePerJumpingFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById(
+        "jumping_left" + this.frameNumberJumping
+      );
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberJumping < this.numberOfJumpingImages - 1) {
+        //we minus one bec we have to account for the 0th index
+        this.frameNumberJumping++;
+      } else {
+        this.frameNumberJumping = 0;
+      }
+    }
   }
 }
