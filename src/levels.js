@@ -1,5 +1,3 @@
-import Tile from "./tile";
-import Player from "./player";
 
 class LevelMaker {
   constructor(canvas, context) {
