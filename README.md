@@ -61,6 +61,32 @@ export function collisionCheck(character, platform) {
 ```
 
 
+# Player animations
+
+###### 
+
+```javascript
+ if (!this.timeWhenLastUpdate) {
+      //initial picture that we render (starting point) //draw is called 16 ms
+      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
+    }
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
+      //how long the image renders until we render the new one
+      this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
+      this.timeWhenLastUpdate = this.startTime;
+      if (this.frameNumberIdle < this.numberOfIdleImages - 1) {
+        this.frameNumberIdle++;
+      } else {
+        this.frameNumberIdle = 0;
+      }
+    }
+  }
+```
+
+
+
 
 
 

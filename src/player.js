@@ -41,7 +41,6 @@ export default class Player {
     //animation variables
     this.timeWhenLastUpdate = null;
     this.timeFromLastUpdate = null;
-    this.started = false;
     this.startTime = 0;
   }
   draw() {
@@ -52,38 +51,6 @@ export default class Player {
     else if (this.runningLeft) this.runningLeftAnimation();
     else if (this.idleLeft) this.idleLeftAnimation();
     else this.idleRightAnimation();
-  }
-
-  idleRightAnimation() {
-    this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
-    this.context.drawImage(
-      this.monkey,
-      60,
-      100,
-      510,
-      475,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
-
-    if (!this.timeWhenLastUpdate) {
-      //initial picture that we render (starting point) //draw is called 16 ms
-      this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
-    }
-    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
-
-    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
-      //how long the image renders until we render the new one
-      this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
-      this.timeWhenLastUpdate = this.startTime;
-      if (this.frameNumberIdle < this.numberOfIdleImages - 1) {
-        this.frameNumberIdle++;
-      } else {
-        this.frameNumberIdle = 0;
-      }
-    }
   }
 
   idleLeftAnimation() {
@@ -133,8 +100,10 @@ export default class Player {
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point) //draw is called 16 ms
+      debugger
       this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
     }
+    debugger
     this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
 
     if (this.timeFromLastUpdate > this.timePerIdleFrame) {
