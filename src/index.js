@@ -64,6 +64,7 @@ function loop() {
   } else if (keys[37]) {
     //player moves left
     if (player.velX > -player.speed) {
+      player.runningRight = false;
       player.runningLeft = true; //animation running left
       player.idleRight = false
       player.idleLeft = true
