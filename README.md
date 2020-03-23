@@ -10,6 +10,7 @@
 
 # Functionality and MVPs
 
+###### intro screen/game over screen
 ###### audio for collecting bananas
 ###### sprite animations
 ###### collision detection 
