@@ -147,7 +147,7 @@ function complete() {
   context.fillStyle = "orange";
   context.textAlign = "center";
   context.fillText(
-    "You Won! Press enter to start again",
+    "You Won!",
     canvas.width / 2,
     canvas.height / 2 + 50
   );
