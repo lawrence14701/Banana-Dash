@@ -17,7 +17,13 @@ export function intro_screen(canvas, context) {
   context.fillText(
     "Press Enter To Start",
     canvas.width / 2,
-    canvas.height / 2 + 50
+    canvas.height / 2 + 60
+  );
+
+  context.fillText(
+    "Controls: W to jump, D and A to run",
+    canvas.width / 2,
+    canvas.height / 2 + 30
   );
 }
 
