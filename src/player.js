@@ -100,10 +100,8 @@ export default class Player {
 
     if (!this.timeWhenLastUpdate) {
       //initial picture that we render (starting point) //draw is called 16 ms
-      debugger
       this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
     }
-    debugger
     this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
 
     if (this.timeFromLastUpdate > this.timePerIdleFrame) {
