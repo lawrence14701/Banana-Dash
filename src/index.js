@@ -43,7 +43,7 @@ function loop() {
   levels.draw_platforms();
   player.draw();
 
-  if (keys[38] || keys[32]) {
+  if (keys[87] || keys[32]) {
     //player presses jump (spaceBar or up arrow)
     if (!player.jumpingRight && !player.jumpingLeft) {
       //add a jumping sound here, optional
@@ -53,7 +53,7 @@ function loop() {
     }
   }
 
-  if (keys[39]) {
+  if (keys[68]) {
     //player moves right
     if (player.velX < player.speed) {
       player.runningRight = true; //animation running right
@@ -61,7 +61,7 @@ function loop() {
       player.idleRight = true
       player.velX++;
     }
-  } else if (keys[37]) {
+  } else if (keys[65]) {
     //player moves left
     if (player.velX > -player.speed) {
       player.runningRight = false;
