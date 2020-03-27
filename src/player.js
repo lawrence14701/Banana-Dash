@@ -99,12 +99,12 @@ export default class Player {
     );
 
     if (!this.timeWhenLastUpdate) {
-      //initial picture that we render (starting point) //draw is called 16 ms
+      //initial picture that we render (starting point)
       this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
     }
-    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
+    this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate; //time in-between animation frames
 
-    if (this.timeFromLastUpdate > this.timePerIdleFrame) {
+    if (this.timeFromLastUpdate > this.timePerIdleFrame) { //checking when time in between animation frame is greater than timeperframe
       //how long the image renders until we render the new one
       this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
       this.timeWhenLastUpdate = this.startTime;
