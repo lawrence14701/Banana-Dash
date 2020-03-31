@@ -12,6 +12,7 @@ canvas.height = levels.tileSize * levels.levelRows; //same as before
 
 //sound
 var sound = document.getElementById("background-music");
+sound.mute = false;
 var bananaSound = document.getElementById("collect-banana-sound");
 var jumpSound = document.getElementById("jump");
 
@@ -192,10 +193,11 @@ close.addEventListener("click", function(event) {
   document.body.style.backgroundColor = "white";
 });
 
-// toggleSound.addEventListener('click',function(event){
-//   if(sound.muted === 'true'){
-//     sound.mute = false
-//   }else{
-//     sound.mute = true
-//   }
-// })
+toggleSound.addEventListener('click',function(event){
+  if (sound.paused){
+    sound.play();
+  }
+  else{
+    sound.pause();
+  }
+})

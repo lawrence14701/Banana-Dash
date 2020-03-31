@@ -69,17 +69,25 @@ export function collisionCheck(character, platform) {
 
 # Player animations
 
-###### 
+<!-- blank line -->
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
+    <source src="./src/img/animation.gif" type="video/mp4">
+  </video>
+</figure>
+<!-- blank line -->
+
+
+###### insert text here
 
 ```javascript
  if (!this.timeWhenLastUpdate) {
-      //initial picture that we render (starting point) //draw is called 16 ms
+      //initial picture that we render (starting point)
       this.timeWhenLastUpdate = this.startTime - this.timePerIdleFrame;
     }
     this.timeFromLastUpdate = this.startTime - this.timeWhenLastUpdate;
-
+    //checking when time in between animation frame is greater than timeperframe
     if (this.timeFromLastUpdate > this.timePerIdleFrame) {
-      //how long the image renders until we render the new one
       this.monkey = document.getElementById("idle_" + this.frameNumberIdle);
       this.timeWhenLastUpdate = this.startTime;
       if (this.frameNumberIdle < this.numberOfIdleImages - 1) {
