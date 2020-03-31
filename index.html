@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=B, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/dc2325b068.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Banana Dash</title>
     <style>
       #game {
@@ -11,31 +15,29 @@
         background-size: cover;
         background-repeat: no-repeat, no-repeat;
         background-position: center, center;
-        /* padding-left: 0;
-        padding-right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block; */
-        padding: 0;
-        margin: auto;
-        display: block;
+        /* padding: 0; */
+        /* margin: auto; */
+        /* display: block;
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
+        left: 0; */
+        /* right: 0; */
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%);
       }
 
-      #canvas-container {
-      }
       .tiles {
         display: none;
       }
       .animations {
         display: none;
       }
-      #logo {
-        display: none;
+      .info {
+        height: 100px;
+        width: 100px;
+        background: black;
       }
       body {
         margin: 0;
@@ -48,10 +50,63 @@
       html {
         height: 100%;
       }
+      .container {
+        display: flex;
+      }
+      /* Split the screen in half */
+      .split {
+        height: 100%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }
+
+      /* Control the left side */
+      .left {
+        left: 0;
+        background-color: #111;
+      }
+
+      /* Control the right side */
+      .right {
+        right: 0;
+      }
+
+      /* If you want the content centered horizontally and vertically */
+      .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      /* Style the image inside the centered container, if needed */
+      .centered img {
+        width: 150px;
+        border-radius: 50%;
+      }
     </style>
   </head>
   <body>
-    <canvas id="game">Your browser doesn't support canvas</canvas>
+    <div class="container">
+      <div class="split left">
+        <div class="centered">
+          <img src="img_avatar2.png" alt="Avatar woman" />
+          <h2>Jane Flex</h2>
+          <p>Some text.</p>
+        </div>
+      </div>
+
+      <div class="split right">
+        <div class="centered">
+          <canvas id="game">Your browser doesn't support canvas</canvas>
+        </div>
+      </div>
+    </div>
 
     <audio src="./src/sounds/background.mp3" id="background-music"></audio>
     <audio
@@ -59,7 +114,7 @@
       id="collect-banana-sound"
     ></audio>
 
-    <img id="logo" src="./src/img/banana_dash_logo.png" alt="" />
+    <!-- <img id="logo" src="./src/img/banana_dash_logo.png" alt="" /> -->
 
     <div class="animations">
       <img
