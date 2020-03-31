@@ -29,7 +29,7 @@
 <!-- blank line -->
 
 
-###### This algo iterates through each platform in the canvas and simultaneously checks it against the player's X and Y coordinates. 
+###### The purpose of this function is to iterate through every platform in the canvas while simultaneously checking the player's X and Y coordinates and determining whether it equals the X or Y coordinate of the platform. It was important for me to take into consideration the width and height of the platform and player. When a collision happens, the players X and Y coordinates are adjusted accordingly through the offset variable.
 
 ```javascript
 export function collisionCheck(character, platform) {
