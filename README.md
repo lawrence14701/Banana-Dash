@@ -7,18 +7,18 @@
 <a href='https://lawrence14701.github.io/Banana-Dash/'>Click here to go to live version of Banana Dash</a>
 
 # Technologies and languages used
-###### JS
-###### Canvas html5
-###### webpack
-###### CSS3
+* JS
+* Canvas html5
+* webpack
+* CSS3
 
 
 # Functionality and MVPs
 
-###### intro screen/game over screen
-###### audio for collecting bananas
-###### sprite animations
-###### collision detection 
+* intro screen/game over screen
+* audio for collecting bananas
+* sprite animations
+* collision detection 
 
 
 
