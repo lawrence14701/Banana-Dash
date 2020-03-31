@@ -11,7 +11,7 @@ canvas.height = levels.tileSize * levels.levelRows; //same as before
 
 //sound
 var sound = document.getElementById("background-music");
-var bananaSound = document.getElementById('collect-banana-sound')
+var bananaSound = document.getElementById("collect-banana-sound");
 var jumpSound = document.getElementById("jump");
 
 var keys = [];
@@ -22,17 +22,17 @@ let startY = levels.start()[1]; //player start y position for first level
 const player = new Player(startX, startY, 60, 60, context);
 
 function startGame() {
-    //restart the background music when it hits the end
-    sound.addEventListener(
-      "ended",
-      function() {
-        this.currentTime = 0;
-        this.play();
-      },
-      false
-    );
-    sound.play();
-  
+  //restart the background music when it hits the end
+  sound.addEventListener(
+    "ended",
+    function() {
+      this.currentTime = 0;
+      this.play();
+    },
+    false
+  );
+  sound.play();
+
   clearCanvas();
   requestAnimationFrame(loop);
 }
@@ -47,8 +47,8 @@ function loop() {
     //player presses jump (spaceBar or up arrow)
     if (!player.jumpingRight && !player.jumpingLeft) {
       //add a jumping sound here, optional
-      if(player.idleLeft) player.jumpingLeft = true
-      if(player.idleRight) player.jumpingRight = true
+      if (player.idleLeft) player.jumpingLeft = true;
+      if (player.idleRight) player.jumpingRight = true;
       player.velY = -player.jumpStrength * 2;
     }
   }
@@ -57,8 +57,8 @@ function loop() {
     //player moves right
     if (player.velX < player.speed) {
       player.runningRight = true; //animation running right
-      player.idleLeft = false
-      player.idleRight = true
+      player.idleLeft = false;
+      player.idleRight = true;
       player.velX++;
     }
   } else if (keys[65]) {
@@ -66,8 +66,8 @@ function loop() {
     if (player.velX > -player.speed) {
       player.runningRight = false;
       player.runningLeft = true; //animation running left
-      player.idleRight = false
-      player.idleLeft = true
+      player.idleRight = false;
+      player.idleLeft = true;
       player.velX--;
     }
   } else {
@@ -102,15 +102,15 @@ function loop() {
 
   let goal = levels.platforms.bananas[0];
   if (collisionCheck(player, goal)) {
-      bananaSound.play();
-      bananaSound.currentTime = 0; //reset banana sound
-      clearCanvas();
-      levels.nextLevel();
-      if(!levels.done){
-        player.y = levels.start()[1]; //change player y position to fit the level
-        player.x = levels.start()[0]; //change player x position to fit the level
-      }
+    bananaSound.play();
+    bananaSound.currentTime = 0; //reset banana sound
+    clearCanvas();
+    levels.nextLevel();
+    if (!levels.done) {
+      player.y = levels.start()[1]; //change player y position to fit the level
+      player.x = levels.start()[0]; //change player x position to fit the level
     }
+  }
   if (!levels.done) {
     requestAnimationFrame(loop);
   } else {
@@ -128,8 +128,8 @@ function reset() {
     false
   );
   sound.play();
-  levels.levelsIndex = 0
-  levels.done = false
+  levels.levelsIndex = 0;
+  levels.done = false;
   player.x = startX;
   player.y = startY;
   player.grounded = true;
@@ -138,7 +138,6 @@ function reset() {
 
   requestAnimationFrame(loop);
 }
-
 
 function complete() {
   clearCanvas();
@@ -153,18 +152,12 @@ function complete() {
   );
 
   context.font = "20px Arial";
-  context.fillText(
-    "You Won!",
-    canvas.width / 2,
-    canvas.height / 2
-  );
+  context.fillText("You Won!", canvas.width / 2, canvas.height / 2);
 }
 
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
-
-
 
 //event listeners
 intro_screen(canvas, context);
@@ -182,4 +175,28 @@ document.body.addEventListener("keydown", function(event) {
 document.body.addEventListener("keyup", function(event) {
   keys[event.keyCode] = false;
 });
+
+const open = document.getElementById("open");
+const close = document.getElementById("close");
+const toggleSound = document.getElementById('sound')
+open.addEventListener("click", function(event) {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+});
+close.addEventListener("click", function(event) {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.body.style.backgroundColor = "white";
+});
+
+// toggleSound.addEventListener('click',function(event){
+//   if(sound.muted === 'true'){
+//     sound.mute = false
+//   }else{
+//     sound.mute = true
+//   }
+// })
+
+
 
