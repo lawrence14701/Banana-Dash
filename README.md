@@ -24,7 +24,12 @@
 
 # Collision Detection Algo
 
-###### iterates through each platform in the canvas and simultaneously check it against the players x/y coordinates. 
+<!-- blank line -->
+![Alt Text](./src/img/collision.gif)
+<!-- blank line -->
+
+
+###### This algo iterates through each platform in the canvas and simultaneously checks it against the player's X and Y coordinates. 
 
 ```javascript
 export function collisionCheck(character, platform) {
@@ -74,7 +79,7 @@ export function collisionCheck(character, platform) {
 <!-- blank line -->
 
 
-###### insert text here
+###### Inside the player animation logic I iterated through my sprite images based by comparing the loop time to the last time the sprite has rendered
 
 ```javascript
  if (!this.timeWhenLastUpdate) {
