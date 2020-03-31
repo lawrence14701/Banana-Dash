@@ -9,7 +9,7 @@ export function intro_screen(canvas, context) {
   // context.drawImage(image, x, y, width, 200);
   
   context.font = "50px Impact";
-  context.fillStyle = "orange";
+  context.fillStyle = "black";
   context.textAlign = "center";
   context.fillText("Banana Dash", canvas.width / 2, canvas.height / 2);
 
@@ -18,12 +18,6 @@ export function intro_screen(canvas, context) {
     "Press Enter To Start",
     canvas.width / 2,
     canvas.height / 2 + 60
-  );
-
-  context.fillText(
-    "Controls: W to jump, D and A to run",
-    canvas.width / 2,
-    canvas.height / 2 + 30
   );
 }
 

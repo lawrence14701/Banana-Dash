@@ -5,6 +5,7 @@ import Player from "./player";
 
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
+const levelTag = document.getElementById("level");
 const levels = new LevelMaker(canvas, context);
 canvas.width = levels.tileSize * levels.levelCols; //canvas size changes as I add or remove tiles
 canvas.height = levels.tileSize * levels.levelRows; //same as before
@@ -111,7 +112,9 @@ function loop() {
       player.x = levels.start()[0]; //change player x position to fit the level
     }
   }
+
   if (!levels.done) {
+    levelTag.innerHTML = `${levels.levelsIndex + 1}/${levels.levels.length}`;
     requestAnimationFrame(loop);
   } else {
     complete();
@@ -135,7 +138,6 @@ function reset() {
   player.grounded = true;
   player.velY = 0;
   player.velX = 0;
-
   requestAnimationFrame(loop);
 }
 
@@ -143,7 +145,7 @@ function complete() {
   clearCanvas();
   sound.pause();
   context.font = "50 px Impact";
-  context.fillStyle = "orange";
+  context.fillStyle = "black";
   context.textAlign = "center";
   context.fillText(
     "Press enter to play again",
@@ -178,7 +180,7 @@ document.body.addEventListener("keyup", function(event) {
 
 const open = document.getElementById("open");
 const close = document.getElementById("close");
-const toggleSound = document.getElementById('sound')
+const toggleSound = document.getElementById("sound");
 open.addEventListener("click", function(event) {
   document.getElementById("mySidenav").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
@@ -197,6 +199,3 @@ close.addEventListener("click", function(event) {
 //     sound.mute = true
 //   }
 // })
-
-
-
