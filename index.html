@@ -16,9 +16,12 @@
         background-size: cover;
         background-repeat: no-repeat, no-repeat;
         background-position: center, center;
-        margin-top: 3rem;
         width: 800;
         height: 750;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
       }
 
       .tiles {
@@ -37,41 +40,39 @@
         height: 100%;
       }
       ul {
-        display: flex;
-        width: 100%;
-        justify-content: space-evenly;
-        list-style: none;
-        padding: 0;
-        z-index: 10;
-        width: 300px;
-        height: 100px;
-        border-radius: 7px;
-        background: black;
-        color: white;
-        display: flex;
-        font-size: 30px;
-        align-items: center;
-        margin: 0 auto;
-        padding: 3px;
-      }
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0;
+    z-index: 10;
+    width: auto;
+    height: auto;
+    border-radius: 7px;
+    background: black;
+    color: white;
+    display: flex;
+    font-size: 30px;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
+    flex-direction: column;
+}
+      
 
-      ul .hover:hover {
-        color: cyan;
-        cursor: pointer;
-      }
+   
       html {
         height: 100%;
       }
 
       .sidenav {
         height: 100%; /* 100% Full-height */
-        width: 0; /* 0 width - change this with JavaScript */
+        width: 250px; /* 0 width - change this with JavaScript */
         position: fixed; /* Stay in place */
         z-index: 1; /* Stay on top */
         top: 0;
         left: 0;
         background-color: #111; /* Black*/
         overflow-x: hidden; /* Disable horizontal scroll */
+        overflow-y: hidden;
         padding-top: 60px;
         transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
       }
@@ -125,7 +126,10 @@
         text-align: center;
       }
       #open-container {
-        height: 20vh;
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
       }
       .fab {
         font-size: 60px;
@@ -140,15 +144,39 @@
         position: absolute;
         right: 20px;
       }
-      .sound-mute:before {
+      .sound-mute::after {
         content: "\f6a9";
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
       }
-      .sound-on:before {
+      .sound-mute:hover{
+         color: green;
+        cursor: pointer;
+      }
+      .sound-on:hover{
+        color: red;
+        cursor: pointer;
+      }
+      .sound-on::after {
         content: "\f028";
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
+      }
+      #restart:hover{
+        color: orange;
+        cursor: pointer;
+      }
+      #open:hover{
+        color:indianred;
+        cursor: pointer;
+      }
+      .arrow{
+        position: absolute;
+        cursor: pointer;
+        left: 60px;
+        top: 30px;
+        font-size: 120px;
+        color: black;
       }
 
       @media screen and (max-height: 450px) {
@@ -162,6 +190,7 @@
     </style>
   </head>
   <body>
+    <div class='arrow' id='open'><i class="fas fa-arrow-right"></i></div>
     <div id="mySidenav" class="sidenav">
       <div id="close"><i class="fas fa-times"></i></div>
       <h2>Welcome to Banana Dash</h2>
@@ -191,10 +220,9 @@
       </div>
       <div id="open-container">
         <ul>
-          <li class="hover" id="open">Menu</li>
           <li>Level:<span id="level">0/3</span></li>
           <li class="hover sound-mute"></li>
-          <li id='restart'><i class="fas fa-undo"></i></li>
+          <li id="restart" class="hover"><i class="fas fa-undo"></i></li>
         </ul>
       </div>
     </div>
