@@ -181,7 +181,10 @@ document.body.addEventListener("keyup", function(event) {
 
 const open = document.getElementById("open");
 const close = document.getElementById("close");
-const toggleSound = document.getElementById("sound");
+const restartLevel = document.getElementById('restart')
+let toggleSound = document.getElementsByClassName("sound-mute");
+
+
 open.addEventListener("click", function(event) {
   document.getElementById("mySidenav").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
@@ -193,11 +196,23 @@ close.addEventListener("click", function(event) {
   document.body.style.backgroundColor = "white";
 });
 
-toggleSound.addEventListener('click',function(event){
+toggleSound[0].addEventListener('click',function(event){
   if (sound.paused){
     sound.play();
+    toggleSound[0].className = 'sound-mute hover'
+    toggleSound = document.getElementsByClassName("sound-mute hover");
   }
   else{
     sound.pause();
+    toggleSound[0].className = "sound-on hover";
+    toggleSound = document.getElementsByClassName("sound-on hover");
   }
 })
+restartLevel.addEventListener("click", function(event){
+  resetLevel()
+})
+
+function resetLevel() {
+  player.y = levels.start()[1]; //change player y position to fit the level
+  player.x = levels.start()[0]; //change player x position to fit the level
+}

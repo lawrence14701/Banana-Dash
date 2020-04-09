@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel='icon' href='/src/img/favicon.ico' type='image/x-icon'/ >
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=B, initial-scale=1.0" />
     <script
@@ -124,19 +125,7 @@
         text-align: center;
       }
       #open-container {
-        /* z-index: 10; */
-        /* width: 300px; */
         height: 20vh;
-        /* border-radius: 7px;
-        background: black;
-        position: absolute;
-        left: 50%;
-        right: 10px;
-        transform: translate(-50%);
-        bottom: 1%;
-        color: white;
-        font-size: 30px;
-        display: flex; */
       }
       .fab {
         font-size: 60px;
@@ -150,6 +139,16 @@
       #close i {
         position: absolute;
         right: 20px;
+      }
+      .sound-mute:before {
+        content: "\f6a9";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+      }
+      .sound-on:before {
+        content: "\f028";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
       }
 
       @media screen and (max-height: 450px) {
@@ -172,16 +171,16 @@
       <h2>D = run right</h2>
       <h2>Objective: collect the bananas</h2>
 
-      <a href="https://www.linkedin.com/in/lawrencenicastro"
+      <a target="_blank" href="https://www.linkedin.com/in/lawrencenicastro"
         ><i class="fab fa-linkedin"></i
       ></a>
-      <a href="https://github.com/lawrence14701"
+      <a target="_blank" href="https://github.com/lawrence14701"
         ><i class="fab fa-github-square"></i
       ></a>
-      <a href="https://angel.co/u/lawrence-nicastro"
+      <a target="_blank" href="https://angel.co/u/lawrence-nicastro"
         ><i class="fab fa-angellist"></i
       ></a>
-      <a href="mailto:lawrence.nicastro1@gmail.com"
+      <a target="_blank" href="mailto:lawrence.nicastro1@gmail.com"
         ><i class="fab fas fa-envelope"></i
       ></a>
       <h2>Designed By Lawrence Nicastro</h2>
@@ -194,7 +193,8 @@
         <ul>
           <li class="hover" id="open">Menu</li>
           <li>Level:<span id="level">0/3</span></li>
-          <li class="hover" id="sound"><i class="fas fa-volume-mute"></i></li>
+          <li class="hover sound-mute"></li>
+          <li id='restart'><i class="fas fa-undo"></i></li>
         </ul>
       </div>
     </div>
