@@ -20,7 +20,7 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
       }
 
       .tiles {
@@ -39,25 +39,23 @@
         height: 100%;
       }
       ul {
-    justify-content: space-evenly;
-    list-style: none;
-    padding: 0;
-    z-index: 10;
-    width: auto;
-    height: auto;
-    border-radius: 7px;
-    background: black;
-    color: white;
-    display: flex;
-    font-size: 30px;
-    align-items: center;
-    margin: 0 auto;
-    padding: 10px;
-    flex-direction: column;
-}
-      
+        justify-content: space-evenly;
+        list-style: none;
+        padding: 0;
+        z-index: 10;
+        width: auto;
+        height: auto;
+        border-radius: 7px;
+        background: black;
+        color: white;
+        display: flex;
+        font-size: 30px;
+        align-items: center;
+        margin: 0 auto;
+        padding: 10px;
+        flex-direction: column;
+      }
 
-   
       html {
         height: 100%;
       }
@@ -148,11 +146,11 @@
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
       }
-      .sound-mute:hover{
-         color: green;
+      .sound-mute:hover {
+        color: green;
         cursor: pointer;
       }
-      .sound-on:hover{
+      .sound-on:hover {
         color: red;
         cursor: pointer;
       }
@@ -161,19 +159,20 @@
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
       }
-      #restart:hover{
+      #restart:hover {
         color: orange;
         cursor: pointer;
       }
-      #open:hover{
-        color:indianred;
+      #open:hover {
+        color: indianred;
         cursor: pointer;
       }
-      .arrow{
+      .arrow {
         position: absolute;
         cursor: pointer;
         left: 60px;
-        top: 75px;
+        top: 50%;
+        transform: translate(0, -50%);
         font-size: 120px;
         color: #dfdebf;
       }
@@ -189,7 +188,7 @@
     </style>
   </head>
   <body>
-    <div class='arrow' id='open'><i class="fas fa-arrow-right"></i></div>
+    <div class="arrow" id="open"><i class="fas fa-arrow-right"></i></div>
     <div id="mySidenav" class="sidenav">
       <div id="close"><i class="fas fa-times"></i></div>
       <h2>Welcome to Banana Dash</h2>
