@@ -182,7 +182,7 @@ document.body.addEventListener("keyup", function(event) {
 const open = document.getElementById("open");
 const close = document.getElementById("close");
 const restartLevel = document.getElementById('restart')
-let toggleSound = document.getElementsByClassName("sound-on");
+let toggleSound = document.getElementsByClassName("sound-on") ;
 
 
 open.addEventListener("click", function(event) {
@@ -197,7 +197,6 @@ close.addEventListener("click", function(event) {
 });
 
 toggleSound[0].addEventListener('click',function(event){
-  console.log('chcecking')
   if (sound.paused){
     sound.play();
     toggleSound[0].className = 'sound-on hover'
