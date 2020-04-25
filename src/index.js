@@ -34,7 +34,6 @@ function startGame() {
     false
   );
   sound.play();
-
   clearCanvas();
   requestAnimationFrame(loop);
 }
